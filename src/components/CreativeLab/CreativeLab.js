@@ -7,24 +7,24 @@ function CreativeLab() {
 
     return (
 
-        <Container fluid className="project-section">
+        <Container fluid className="creative-section">
 
             <Container>
 
-                <h1 className="project-heading">
-                    Strategic <strong className="purple">Visual Lab</strong>
+                <h1 className="creative-heading">
+                    Creative <strong className="purple">Visual Lab</strong>
                 </h1>
 
-                <p style={{ color: "white", textAlign: "center" }}>
-                    A curated collection of concept visuals exploring behavioral
-                    psychology, brand thinking and digital systems.
+                <p className="creative-subtitle">
+                    A curated collection of visual experiments exploring
+                    behavioral psychology, brand positioning and digital systems.
                 </p>
 
-                <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
+                <Row className="creative-grid">
 
                     {creativeProjects.map((project, index) => (
 
-                        <Col md={4} className="project-card" key={index}>
+                        <Col lg={4} md={6} sm={12} key={index} className="creative-grid-col">
 
                             <CreativeCard
                                 title={project.title}

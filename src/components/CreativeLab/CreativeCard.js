@@ -1,28 +1,35 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
 
 function CreativeCard({ title, description, images }) {
+
     return (
-        <Card className="project-card-view">
 
-            <Card.Img
-                variant="top"
-                src={images[0]}
-                alt="creative work"
-            />
+        <div className="creative-card">
 
-            <Card.Body>
+            <div className="creative-image-wrapper">
+                <img
+                    src={images[0]}
+                    alt={title}
+                    className="creative-image"
+                />
+            </div>
 
-                <Card.Title>{title}</Card.Title>
+            <div className="creative-content">
 
-                <Card.Text style={{ textAlign: "justify" }}>
+                <h3 className="creative-title">
+                    {title}
+                </h3>
+
+                <p className="creative-description">
                     {description}
-                </Card.Text>
+                </p>
 
-            </Card.Body>
+            </div>
 
-        </Card>
+        </div>
+
     );
+
 }
 
 export default CreativeCard;
