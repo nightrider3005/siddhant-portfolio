@@ -1,49 +1,40 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import { ImPointRight } from "react-icons/im";
 
 function AboutCard() {
   return (
-    <Card className="quote-card-view">
+    <Card className="about-card">
       <Card.Body>
-        <blockquote className="blockquote mb-0">
-          <p style={{ textAlign: "justify" }}>
-            Hi everyone! I’m <span className="purple">Siddhant Garg</span> from{" "}
-            <span className="purple">Gwalior, India</span>.
-            <br />
-            I am a <span className="purple">B.Tech Computer Science graduate</span> from{" "}
-            <span className="purple">VIT</span> with a strong interest in growth strategy and brand building.
-            <br />
-            My academic foundation is technical, but my real strength lies in understanding markets, positioning, and consumer psychology.
-            <br />
-            <br />
-            I played a key role in contributing to the growth and structuring of{" "}
-            <span className="purple">OURi.OUT</span> by working on strategy, positioning, and execution systems.
-            <br />
-            <br />
-            Outside of work, I constantly study behavioral psychology and strategic thinking to build brands that grow by design.
+
+        <div className="terminal-header">
+          <span className="terminal-dot red"></span>
+          <span className="terminal-dot yellow"></span>
+          <span className="terminal-dot green"></span>
+          <span className="terminal-title">system_profile</span>
+        </div>
+
+        <div className="terminal-body">
+
+          <p><span className="terminal-key">Name</span> : Siddhant Garg</p>
+          <p><span className="terminal-key">Location</span> : Gwalior, India</p>
+          <p><span className="terminal-key">Background</span> : B.Tech Computer Science — VIT</p>
+
+          <p><span className="terminal-key">Focus</span> : Growth Strategy</p>
+          <p><span className="terminal-key">Edge</span> : Consumer Psychology</p>
+          <p><span className="terminal-key">Approach</span> : Systems Thinking</p>
+
+          <p>
+            <span className="terminal-key">Current Work</span> :
+            Structuring growth systems and strategic positioning for
+            <span className="purple"> OURi.OUT</span>
           </p>
 
-          <ul>
-            <li className="about-activity">
-              <ImPointRight /> Studying Behavioral Psychology
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Building Growth Systems
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Exploring Brand Strategy and Positioning
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Continuous Self Development
-            </li>
-          </ul>
-
-          <p style={{ color: "rgb(155 126 172)" }}>
-            "Growth is engineered through clarity, psychology, and disciplined execution."{" "}
+          <p className="terminal-quote">
+            "Growth is engineered through clarity, psychology and execution."
           </p>
-          <footer className="blockquote-footer">Siddhant</footer>
-        </blockquote>
+
+        </div>
+
       </Card.Body>
     </Card>
   );

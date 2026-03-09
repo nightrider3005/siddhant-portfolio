@@ -847,3 +847,115 @@ button:focus {
   }
 
 }
+
+.about-heading {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.about-subtext {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.about-section {
+  margin-top: 25px;
+}
+
+.about-mini-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #c770f0;
+}
+
+.about-quote {
+  margin-top: 25px;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* MOBILE FIX */
+@media (max-width:768px) {
+
+  .about-heading {
+    font-size: 22px;
+  }
+
+  .about-subtext {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+}
+
+.about-card {
+  background: #0e0e1a;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px;
+}
+
+/* terminal top bar */
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.red {
+  background: #ff5f56;
+}
+
+.yellow {
+  background: #ffbd2e;
+}
+
+.green {
+  background: #27c93f;
+}
+
+.terminal-title {
+  margin-left: 10px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* body */
+
+.terminal-body {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.terminal-key {
+  color: #c770f0;
+  font-weight: 600;
+}
+
+.terminal-quote {
+  margin-top: 20px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* mobile fix */
+
+@media (max-width:768px) {
+
+  .terminal-body {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+}
