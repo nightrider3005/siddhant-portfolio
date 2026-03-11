@@ -21,4 +21,4 @@ This website showcases:
 
 ## Live Website
 
-siddhantgarg.official
+www.siddhantgarg.official
