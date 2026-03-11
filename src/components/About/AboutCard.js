@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 const cardStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-  /* Terminal card */
   .sg-about-card {
     position: relative;
     border-radius: 20px;
@@ -23,7 +22,6 @@ const cardStyles = `
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  /* Animated corner brackets */
   .sg-about-card::before,
   .sg-about-card::after {
     content: '';
@@ -49,7 +47,6 @@ const cardStyles = `
     border-color: rgba(198,120,221,0.9);
   }
 
-  /* Extra corners */
   .sg-card-corner-tr,
   .sg-card-corner-bl {
     position: absolute;
@@ -67,7 +64,6 @@ const cardStyles = `
     border-color: rgba(198,120,221,0.9);
   }
 
-  /* Terminal header bar */
   .sg-terminal-header {
     display: flex;
     align-items: center;
@@ -98,7 +94,6 @@ const cardStyles = `
     letter-spacing: 0.5px;
   }
 
-  /* Blinking cursor after title */
   .sg-cursor {
     display: inline-block;
     width: 7px; height: 13px;
@@ -113,13 +108,11 @@ const cardStyles = `
     0%,100%{opacity:1} 50%{opacity:0}
   }
 
-  /* Terminal body */
   .sg-terminal-body {
     padding: 24px 24px 20px;
     position: relative;
   }
 
-  /* Each row */
   .sg-row {
     display: flex;
     align-items: flex-start;
@@ -185,7 +178,6 @@ const cardStyles = `
     color: #c678dd;
   }
 
-  /* Status badge */
   .sg-status-badge {
     display: inline-flex;
     align-items: center;
@@ -210,14 +202,12 @@ const cardStyles = `
     0%,100%{opacity:1} 50%{opacity:0.3}
   }
 
-  /* Divider line inside terminal */
   .sg-terminal-divider {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(198,120,221,0.2), transparent);
     margin: 12px 0;
   }
 
-  /* Quote row */
   .sg-quote {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.78em;
@@ -232,7 +222,6 @@ const cardStyles = `
     color: rgba(198,120,221,0.6);
   }
 
-  /* Glow line at bottom */
   .sg-card-glow-line {
     position: absolute;
     bottom: 0; left: 15%; right: 15%;
@@ -263,7 +252,6 @@ function AboutCard() {
       tag.innerHTML = cardStyles;
       document.head.appendChild(tag);
     }
-    // Typing animation
     let i = 0;
     const interval = setInterval(() => {
       setTyped(full.slice(0, ++i));
@@ -282,7 +270,6 @@ function AboutCard() {
       <div className="sg-card-corner-tr" />
       <div className="sg-card-corner-bl" />
 
-      {/* Terminal Header */}
       <div className="sg-terminal-header">
         <div className="sg-dot sg-dot-red" />
         <div className="sg-dot sg-dot-yellow" />
@@ -293,7 +280,6 @@ function AboutCard() {
         </span>
       </div>
 
-      {/* Body */}
       <div className="sg-terminal-body">
         {rows.map((r, i) => (
           <div className="sg-row" key={i}>
@@ -303,7 +289,6 @@ function AboutCard() {
           </div>
         ))}
 
-        {/* Current work row with live badge */}
         <div className="sg-row">
           <span className="sg-key">Current&nbsp;Work</span>
           <span className="sg-sep">::</span>
@@ -320,7 +305,6 @@ function AboutCard() {
           </span>
         </div>
 
-        {/* Status row */}
         <div className="sg-row">
           <span className="sg-key">Status</span>
           <span className="sg-sep">::</span>
@@ -335,8 +319,8 @@ function AboutCard() {
         <div className="sg-terminal-divider" />
 
         <p className="sg-quote">
-          <span>//</span> &quot;Growth is engineered through clarity, psychology
-          and execution.&quot;
+          <span>{"//"}</span> &quot;Growth is engineered through clarity,
+          psychology and execution.&quot;
         </p>
 
         <div className="sg-card-glow-line" />

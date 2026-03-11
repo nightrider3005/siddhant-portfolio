@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Particle from "../Particle";
 import pdf from "../../Assets/../Assets/Siddhant_Garg_Resume.pdf";
 import { AiOutlineDownload } from "react-icons/ai";
