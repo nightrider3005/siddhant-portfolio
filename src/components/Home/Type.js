@@ -8,13 +8,15 @@ function Type() {
         strings: [
           "Growth Strategist",
           "Brand Architect",
+          "Influencer Network Builder",
+          "AI Educator & Consultant",
           "Partnership Closer",
-          "Systems and Execution Specialist",
-          "B.Tech CSE Graduate",
+          "Systems & Execution Specialist",
         ],
         autoStart: true,
         loop: true,
-        deleteSpeed: 50,
+        deleteSpeed: 40,
+        delay: 60,
       }}
     />
   );
