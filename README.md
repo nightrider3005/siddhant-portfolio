@@ -19,6 +19,5 @@ This website showcases:
 - Custom CSS
 - Deployed on Vercel
 
-## Live Website
+## will have live website soon
 
-www.siddhantgarg.official
