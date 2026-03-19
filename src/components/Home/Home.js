@@ -10,35 +10,34 @@ import { FaLinkedinIn } from "react-icons/fa";
 const homeStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-  /* ═══════════════════════════════════════
+  /* ════════════════════════════
+     RESET — critical
+  ════════════════════════════ */
+  .home-section * { box-sizing: border-box; }
+
+  /* ════════════════════════════
      HERO SECTION
-  ═══════════════════════════════════════ */
+  ════════════════════════════ */
   .home-section {
     position: relative;
-    min-height: 100vh;
-    overflow: hidden;
     background: #070711;
-    display: flex;
-    align-items: center;
+    overflow: hidden;
+    padding-top: 100px;
+    padding-bottom: 70px;
   }
 
-  /* Animated grid */
+  /* Subtle grid */
   .home-section::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(198,120,221,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(198,120,221,0.035) 1px, transparent 1px);
-    background-size: 72px 72px;
-    animation: gridDrift 30s linear infinite;
+      linear-gradient(rgba(198,120,221,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(198,120,221,0.028) 1px, transparent 1px);
+    background-size: 68px 68px;
     pointer-events: none;
     z-index: 0;
-    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
-  }
-  @keyframes gridDrift {
-    0%   { background-position: 0 0, 0 0; }
-    100% { background-position: 72px 72px, 72px 72px; }
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
 
   /* Ambient orbs */
@@ -50,767 +49,568 @@ const homeStyles = `
     z-index: 0;
   }
   .hero-orb-1 {
-    width: 700px; height: 700px;
-    top: -200px; left: -200px;
-    background: radial-gradient(circle, rgba(198,120,221,0.1) 0%, transparent 70%);
-    animation: heroOrb1 20s ease-in-out infinite;
+    width: 550px; height: 550px;
+    top: -160px; left: -160px;
+    background: radial-gradient(circle, rgba(198,120,221,0.09) 0%, transparent 70%);
+    animation: o1 20s ease-in-out infinite;
   }
   .hero-orb-2 {
-    width: 500px; height: 500px;
+    width: 400px; height: 400px;
     bottom: -100px; right: 0;
-    background: radial-gradient(circle, rgba(100,80,200,0.08) 0%, transparent 70%);
-    animation: heroOrb2 25s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(120,80,210,0.07) 0%, transparent 70%);
+    animation: o2 25s ease-in-out infinite;
   }
-  .hero-orb-3 {
-    width: 300px; height: 300px;
-    top: 50%; right: 35%;
-    background: radial-gradient(circle, rgba(198,120,221,0.06) 0%, transparent 70%);
-    animation: heroOrb3 15s ease-in-out infinite;
-  }
-  @keyframes heroOrb1 {
-    0%,100%{transform:translate(0,0)} 33%{transform:translate(80px,50px)} 66%{transform:translate(20px,90px)}
-  }
-  @keyframes heroOrb2 {
-    0%,100%{transform:translate(0,0)} 50%{transform:translate(-70px,-60px)}
-  }
-  @keyframes heroOrb3 {
-    0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.4)}
-  }
+  @keyframes o1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(50px,40px)} }
+  @keyframes o2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-40px)} }
 
-  /* Corner brackets */
-  .hero-corner {
-    position: absolute;
-    width: 40px; height: 40px;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.35;
-  }
-  .hero-corner-tl { top: 30px; left: 30px; border-top: 1px solid #c678dd; border-left: 1px solid #c678dd; }
-  .hero-corner-tr { top: 30px; right: 30px; border-top: 1px solid #c678dd; border-right: 1px solid #c678dd; }
-  .hero-corner-bl { bottom: 30px; left: 30px; border-bottom: 1px solid #c678dd; border-left: 1px solid #c678dd; }
-  .hero-corner-br { bottom: 30px; right: 30px; border-bottom: 1px solid #c678dd; border-right: 1px solid #c678dd; }
+  .home-content { position: relative; z-index: 2; }
 
-  .home-content {
-    position: relative;
-    z-index: 2;
-    padding-top: 60px !important;
+  /* ════════════════════════════
+     LEFT TEXT BLOCK
+  ════════════════════════════ */
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 30px;
   }
 
   /* Greeting */
-  .heading {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 1.6em !important;
-    font-weight: 400 !important;
-    color: rgba(255,255,255,0.75) !important;
-    letter-spacing: 1px;
-    animation: greetReveal 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s both;
-    padding-bottom: 15px;
+  .h-greeting {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15em;
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+    margin: 0 0 10px 0;
+    letter-spacing: 0.3px;
+    animation: fadeDown 0.6s ease 0.1s both;
   }
-  @keyframes greetReveal {
-    from { opacity:0; transform:translateY(-20px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+
   .wave {
     display: inline-block;
-    animation: waveHand 2.2s ease-in-out infinite;
+    animation: wv 2s ease-in-out infinite;
     transform-origin: 70% 70%;
   }
-  @keyframes waveHand {
+  @keyframes wv {
     0%,60%,100%{transform:rotate(0deg)}
     10%,30%{transform:rotate(14deg)}
     20%{transform:rotate(-8deg)}
-    40%{transform:rotate(14deg)}
-    50%{transform:rotate(10deg)}
+    40%{transform:rotate(12deg)}
+    50%{transform:rotate(8deg)}
   }
 
-  /* Name */
-  .heading-name {
-    font-family: 'Syne', sans-serif !important;
-    font-size: 3.4em !important;
-    font-weight: 800 !important;
-    color: #fff !important;
-    letter-spacing: -1.5px;
-    line-height: 1.1 !important;
-    animation: nameSlam 1s cubic-bezier(0.22,1,0.36,1) 0.3s both;
-    position: relative;
+  /* Name block */
+  .h-name-block {
+    margin: 0 0 4px 0;
+    animation: slideIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both;
   }
-  @keyframes nameSlam {
-    from { opacity:0; transform:translateX(-40px) skewX(8deg); }
-    to   { opacity:1; transform:translateX(0) skewX(0deg); }
-  }
+  @keyframes slideIn { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
 
-  .main-name {
-    position: relative;
-    display: inline-block;
+  .h-im {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6em, 4vw, 2.4em);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    display: block;
+  }
+  .h-fullname {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8em, 5vw, 3em);
+    font-weight: 800;
     color: #c678dd;
-  }
-  .main-name::before, .main-name::after {
-    content: 'SIDDHANT GARG';
-    position: absolute;
-    top:0; left:0;
-    font-family:'Syne',sans-serif;
-    font-weight:800;
-    pointer-events:none;
-  }
-  .main-name::before {
-    color: rgba(198,120,221,0.7);
-    animation: glitchA 6s infinite;
-    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
-  }
-  .main-name::after {
-    color: rgba(80,160,255,0.5);
-    animation: glitchB 6s infinite;
-    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-  }
-  @keyframes glitchA {
-    0%,85%,100%{transform:translate(0,0);opacity:0}
-    86%{transform:translate(-4px,-2px);opacity:1}
-    88%{transform:translate(4px,0);opacity:1}
-    90%{transform:translate(-2px,1px);opacity:1}
-    92%{transform:translate(0,0);opacity:0}
-  }
-  @keyframes glitchB {
-    0%,85%,100%{transform:translate(0,0);opacity:0}
-    87%{transform:translate(4px,2px);opacity:1}
-    89%{transform:translate(-3px,-1px);opacity:1}
-    91%{transform:translate(1px,0);opacity:1}
-    93%{transform:translate(0,0);opacity:0}
+    letter-spacing: -1px;
+    line-height: 1.05;
+    display: block;
   }
 
-  .name-underline {
+  /* Underline */
+  .h-underline {
     display: block;
     height: 2px;
-    background: linear-gradient(90deg, #c678dd, rgba(198,120,221,0.2), transparent);
-    border-radius: 2px;
-    margin-top: 6px;
     width: 0;
-    animation: underlineDraw 1.2s cubic-bezier(0.22,1,0.36,1) 0.9s forwards;
-    box-shadow: 0 0 12px rgba(198,120,221,0.5);
-    position: relative;
+    background: linear-gradient(90deg, #c678dd, rgba(198,120,221,0.1));
+    border-radius: 2px;
+    margin: 8px 0 22px 0;
+    animation: ulDraw 1s ease 0.85s forwards;
+    box-shadow: 0 0 8px rgba(198,120,221,0.35);
     overflow: hidden;
+    position: relative;
   }
-  .name-underline::after {
-    content: '';
-    position: absolute;
-    top:0; left:-100%;
-    width:50%; height:100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    animation: underlineScan 3s ease-in-out 2s infinite;
+  .h-underline::after {
+    content:'';
+    position:absolute; top:0; left:-100%; width:50%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);
+    animation:ulScan 3s ease-in-out 2s infinite;
   }
-  @keyframes underlineDraw { to { width: 100%; } }
-  @keyframes underlineScan { 0%{left:-100%} 100%{left:200%} }
+  @keyframes ulDraw { to{width:100%} }
+  @keyframes ulScan { 0%{left:-100%} 100%{left:200%} }
 
-  .type-wrapper {
-    animation: typeReveal 0.8s ease 0.8s both;
-  }
-  @keyframes typeReveal {
-    from{opacity:0;transform:translateY(16px)}
-    to{opacity:1;transform:translateY(0)}
+  /* Type wrapper — CRITICAL: min-height prevents overlap */
+  .h-type-wrap {
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s ease 0.7s both;
   }
 
-  /* Hero stats */
-  .hero-stats {
+  /* Stats — always below type, no overlap */
+  .h-stats {
     display: flex;
-    gap: 32px;
-    margin-top: 8px;
-    animation: typeReveal 0.8s ease 1.1s both;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    animation: fadeUp 0.7s ease 0.95s both;
   }
-  .hero-stat { display:flex; flex-direction:column; gap:2px; }
-  .hero-stat-num {
-    font-family:'Syne',sans-serif;
-    font-size:1.4em;
-    font-weight:800;
-    color:#c678dd;
-    line-height:1;
+  .h-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
-  .hero-stat-label {
-    font-family:'Outfit',sans-serif;
-    font-size:0.65em;
-    font-weight:600;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:rgba(255,255,255,0.35);
+  .h-stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25em;
+    font-weight: 800;
+    color: #c678dd;
+    line-height: 1;
+  }
+  .h-stat-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.58em;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
   }
 
-  /* Logo col */
-  .home-img-col {
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  /* ════════════════════════════
+     RIGHT IMAGE COL
+  ════════════════════════════ */
+  .hero-img-col {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
   }
+
   .logo-ring {
-    position:absolute;
-    border-radius:50%;
-    pointer-events:none;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
   }
   .logo-ring-1 {
-    width:440px; height:440px;
-    border:1px solid rgba(198,120,221,0.12);
-    animation:ringRotate1 20s linear infinite;
+    width: 400px; height: 400px;
+    border: 1px solid rgba(198,120,221,0.1);
+    animation: rSpin 22s linear infinite;
   }
   .logo-ring-2 {
-    width:360px; height:360px;
-    border:1px dashed rgba(198,120,221,0.08);
-    animation:ringRotate1 14s linear infinite reverse;
-  }
-  .logo-ring-3 {
-    width:280px; height:280px;
-    border:1px solid rgba(198,120,221,0.05);
-    animation:ringRotate1 30s linear infinite;
+    width: 300px; height: 300px;
+    border: 1px dashed rgba(198,120,221,0.06);
+    animation: rSpin 16s linear infinite reverse;
   }
   .logo-ring-1::before {
     content:'';
     position:absolute;
-    top:-3px; left:50%;
-    transform:translateX(-50%);
-    width:6px; height:6px;
-    border-radius:50%;
+    top:-4px; left:50%; transform:translateX(-50%);
+    width:7px; height:7px; border-radius:50%;
     background:#c678dd;
-    box-shadow:0 0 12px rgba(198,120,221,0.9),0 0 24px rgba(198,120,221,0.5);
+    box-shadow:0 0 12px rgba(198,120,221,1),0 0 24px rgba(198,120,221,0.5);
   }
-  @keyframes ringRotate1 {
-    from{transform:rotate(0deg)} to{transform:rotate(360deg)}
-  }
+  @keyframes rSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
   .logo-glow {
-    position:absolute;
-    width:350px; height:350px;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(198,120,221,0.15) 0%, transparent 65%);
-    filter:blur(30px);
-    animation:logoPulse 4s ease-in-out infinite;
-    pointer-events:none;
+    position:absolute; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle, rgba(198,120,221,0.13) 0%, transparent 65%);
+    filter:blur(24px);
+    animation:lgPulse 4s ease-in-out infinite; pointer-events:none;
   }
-  @keyframes logoPulse {
-    0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.2);opacity:1}
-  }
-  .home-logo-img {
-    max-height:450px !important;
-    width:100%;
-    object-fit:contain;
-    position:relative;
-    z-index:2;
-    animation:logoFloat 6s ease-in-out infinite, logoReveal 1.2s cubic-bezier(0.22,1,0.36,1) 0.5s both;
-    filter:drop-shadow(0 0 30px rgba(198,120,221,0.25));
-  }
-  @keyframes logoFloat {
-    0%,100%{transform:translateY(0px) rotate(0deg)}
-    33%{transform:translateY(-16px) rotate(0.8deg)}
-    66%{transform:translateY(-8px) rotate(-0.5deg)}
-  }
-  @keyframes logoReveal {
-    from{opacity:0;transform:translateX(60px) scale(0.9)}
-    to{opacity:1;transform:translateX(0) scale(1)}
-  }
+  @keyframes lgPulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.12)} }
 
-  /* ═══════════════════════════════════════
-     FIND ME ON — COMPLETE REDESIGN
-  ═══════════════════════════════════════ */
-  .social-section-wrap {
+  .hero-logo-img {
+    max-height: 400px !important;
+    width: 100%;
+    object-fit: contain;
+    position: relative; z-index: 2;
+    animation: imgFloat 6s ease-in-out infinite, imgReveal 1s ease 0.5s both;
+    filter: drop-shadow(0 0 24px rgba(198,120,221,0.2));
+  }
+  @keyframes imgFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+  @keyframes imgReveal { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+
+  /* ════════════════════════════
+     SOCIAL SECTION
+  ════════════════════════════ */
+  .social-section {
     position: relative;
-    padding: 80px 0 100px;
+    padding: 80px 0 90px;
+    background: #070711;
     overflow: hidden;
-    background: transparent;
+  }
+  .social-section::before {
+    content:'';
+    position:absolute;
+    top:0; left:10%; right:10%; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(198,120,221,0.55) 50%,transparent);
   }
 
-  /* Section top edge glow line */
-  .social-section-wrap::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(198,120,221,0.6) 30%,
-      rgba(198,120,221,0.9) 50%,
-      rgba(198,120,221,0.6) 70%,
-      transparent 100%
-    );
-    box-shadow: 0 0 30px rgba(198,120,221,0.3);
-  }
+  .social-center { text-align: center; }
 
-  /* Central glow blob behind the whole section */
-  .social-section-wrap::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(198,120,221,0.08) 0%, transparent 65%);
-    filter: blur(60px);
-    pointer-events: none;
-    animation: socialGlow 8s ease-in-out infinite;
-  }
-  @keyframes socialGlow {
-    0%,100%{opacity:0.6; transform:translate(-50%,-50%) scale(1)}
-    50%{opacity:1; transform:translate(-50%,-50%) scale(1.2)}
-  }
-
-  .social-inner {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-  }
-
-  /* ── HEADING ── */
-  .social-heading {
+  .social-h1 {
     font-family: 'Syne', sans-serif !important;
-    font-size: 3em !important;
+    font-size: clamp(1.8em, 4vw, 2.4em) !important;
     font-weight: 800 !important;
     color: #fff !important;
-    letter-spacing: -1px;
-    margin-bottom: 0 !important;
-    animation: socialHeadIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
-    position: relative;
-    display: inline-block;
-  }
-  @keyframes socialHeadIn {
-    from{opacity:0; transform:translateY(-24px)}
-    to{opacity:1; transform:translateY(0)}
+    letter-spacing: -0.5px;
+    margin: 0 0 0 0 !important;
   }
 
-  /* ── DIVIDER ── */
-  .social-divider {
+  /* Divider */
+  .soc-div {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin: 16px 0 20px;
+    margin: 14px 0 16px;
   }
-  .sd-line {
-    height: 1px;
-    width: 70px;
-    background: linear-gradient(90deg, transparent, rgba(198,120,221,0.7));
-    position: relative;
-    overflow: hidden;
+  .soc-div-line {
+    height:1px; width:55px;
+    background:linear-gradient(90deg,transparent,rgba(198,120,221,0.65));
+    position:relative; overflow:hidden;
   }
-  .sd-line:last-child {
-    background: linear-gradient(90deg, rgba(198,120,221,0.7), transparent);
+  .soc-div-line:last-child { background:linear-gradient(90deg,rgba(198,120,221,0.65),transparent); }
+  .soc-div-line::after {
+    content:''; position:absolute; top:0; left:-100%; width:50%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent);
+    animation:sdScan 3.2s ease-in-out infinite;
   }
-  .sd-line::after {
-    content: '';
-    position: absolute;
-    top:0; left:-100%;
-    width:50%; height:100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-    animation: sdScan 3.5s ease-in-out infinite;
-  }
-  .sd-line:last-child::after { animation-delay: 1.75s; }
+  .soc-div-line:last-child::after { animation-delay:1.6s; }
   @keyframes sdScan { 0%{left:-100%} 100%{left:200%} }
+  .soc-div-dot {
+    width:8px; height:8px; border-radius:50%; background:#c678dd;
+    box-shadow:0 0 10px rgba(198,120,221,0.9),0 0 22px rgba(198,120,221,0.5);
+    animation:dotPls 2s ease-in-out infinite;
+    position:relative;
+  }
+  .soc-div-dot::before,.soc-div-dot::after {
+    content:''; position:absolute; inset:-4px; border-radius:50%;
+    border:1px solid rgba(198,120,221,0.45);
+    animation:dotRng 2s ease-out infinite;
+  }
+  .soc-div-dot::after { animation-delay:1s; }
+  @keyframes dotPls { 0%,100%{box-shadow:0 0 10px rgba(198,120,221,0.9),0 0 22px rgba(198,120,221,0.5)} 50%{box-shadow:0 0 20px rgba(198,120,221,1),0 0 40px rgba(198,120,221,0.7)} }
+  @keyframes dotRng { 0%{transform:scale(1);opacity:0.7} 100%{transform:scale(2.8);opacity:0} }
 
-  .sd-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #c678dd;
-    box-shadow: 0 0 12px rgba(198,120,221,0.9), 0 0 28px rgba(198,120,221,0.5);
-    position: relative;
-    animation: sdPulse 2s ease-in-out infinite;
-  }
-  .sd-dot::before, .sd-dot::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 1px solid rgba(198,120,221,0.5);
-    animation: sdRing 2s ease-out infinite;
-  }
-  .sd-dot::after { animation-delay: 1s; }
-  @keyframes sdPulse {
-    0%,100%{box-shadow:0 0 12px rgba(198,120,221,0.9),0 0 28px rgba(198,120,221,0.5)}
-    50%{box-shadow:0 0 22px rgba(198,120,221,1),0 0 50px rgba(198,120,221,0.7)}
-  }
-  @keyframes sdRing {
-    0%{transform:scale(1);opacity:0.8} 100%{transform:scale(3);opacity:0}
-  }
-
-  /* ── SUBTITLE ── */
-  .social-subtitle {
+  .social-sub {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 1em !important;
-    color: rgba(255,255,255,0.42) !important;
-    margin-bottom: 48px !important;
-    letter-spacing: 0.2px;
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 0.95em !important;
+    margin: 0 0 40px 0 !important;
   }
-  .social-subtitle .purple {
-    color: #c678dd !important;
-    font-weight: 600;
-  }
+  .social-sub .purple-txt { color: #c678dd !important; font-weight: 600; }
 
-  /* ── ICON CARDS ── */
-  .social-cards-row {
+  /* ── TWO CARDS SIDE BY SIDE ── */
+  .soc-cards {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 24px;
     flex-wrap: wrap;
+    gap: 16px;
   }
 
-  .social-card {
-    position: relative;
-    width: 160px;
-    padding: 28px 20px 24px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(198,120,221,0.15);
-    cursor: pointer;
-    text-decoration: none !important;
+  .soc-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    transition:
-      transform 0.4s cubic-bezier(0.22,1,0.36,1),
-      border-color 0.35s ease,
-      background 0.35s ease,
-      box-shadow 0.4s ease;
-    animation: socialCardIn 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    gap: 12px;
+    width: 145px;
+    padding: 24px 16px 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(198,120,221,0.14);
+    text-decoration: none !important;
+    cursor: pointer;
     overflow: hidden;
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.3s, background 0.3s, box-shadow 0.35s;
+    animation: cardUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
     backdrop-filter: blur(8px);
   }
-  .social-card:nth-child(1){animation-delay:0.15s}
-  .social-card:nth-child(2){animation-delay:0.35s}
-  @keyframes socialCardIn {
-    from{opacity:0; transform:translateY(40px) scale(0.9) rotateX(10deg)}
-    to{opacity:1; transform:translateY(0) scale(1) rotateX(0deg)}
-  }
+  .soc-card:nth-child(1) { animation-delay: 0.1s; }
+  .soc-card:nth-child(3) { animation-delay: 0.25s; }
+  @keyframes cardUp { from{opacity:0;transform:translateY(28px) scale(0.93)} to{opacity:1;transform:translateY(0) scale(1)} }
 
-  /* Card top shimmer line */
-  .social-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 20%; right: 20%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(198,120,221,0.8), transparent);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    box-shadow: 0 0 10px rgba(198,120,221,0.5);
+  .soc-card::before {
+    content:''; position:absolute;
+    top:0; left:20%; right:20%; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(198,120,221,0.7),transparent);
+    opacity:0; transition:opacity 0.3s ease;
   }
-  .social-card:hover::before { opacity: 1; }
-
-  /* Shimmer sweep */
-  .social-card::after {
-    content: '';
-    position: absolute;
-    top: -80%; left: -80%;
-    width: 50%; height: 260%;
-    background: linear-gradient(105deg, transparent, rgba(198,120,221,0.06), transparent);
-    transform: rotate(15deg);
-    pointer-events: none;
-    transition: left 0.6s ease;
-  }
-  .social-card:hover::after { left: 160%; }
-
-  .social-card:hover {
-    transform: translateY(-12px) scale(1.04);
-    border-color: rgba(198,120,221,0.55);
+  .soc-card:hover::before { opacity:1; }
+  .soc-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    border-color: rgba(198,120,221,0.48);
     background: rgba(198,120,221,0.07);
-    box-shadow:
-      0 20px 60px rgba(198,120,221,0.2),
-      0 8px 20px rgba(0,0,0,0.5),
-      inset 0 0 30px rgba(198,120,221,0.04);
+    box-shadow: 0 16px 48px rgba(198,120,221,0.17), 0 4px 14px rgba(0,0,0,0.5);
   }
 
-  /* Icon circle */
-  .social-icon-circle {
-    width: 64px; height: 64px;
+  .soc-icon {
+    width: 56px; height: 56px;
     border-radius: 50%;
     background: rgba(198,120,221,0.08);
-    border: 1.5px solid rgba(198,120,221,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6em;
-    color: #c678dd;
-    transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-    position: relative;
-    overflow: hidden;
+    border: 1.5px solid rgba(198,120,221,0.22);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4em; color: #c678dd;
+    transition: all 0.35s ease;
   }
-
-  /* Spinning conic ring on icon */
-  .social-icon-circle::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(
-      rgba(198,120,221,0.6) 0deg,
-      transparent 90deg,
-      rgba(198,120,221,0.4) 180deg,
-      transparent 270deg,
-      rgba(198,120,221,0.6) 360deg
-    );
-    animation: iconRingSpin 4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
-  }
-  .social-card:hover .social-icon-circle::before { opacity: 1; }
-  @keyframes iconRingSpin {
-    from{transform:rotate(0deg)} to{transform:rotate(360deg)}
-  }
-
-  /* Inner glow on hover */
-  .social-icon-circle::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(198,120,221,0.2) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .social-card:hover .social-icon-circle::after { opacity: 1; }
-
-  .social-card:hover .social-icon-circle {
+  .soc-card:hover .soc-icon {
     background: rgba(198,120,221,0.15);
-    border-color: rgba(198,120,221,0.6);
-    box-shadow: 0 0 30px rgba(198,120,221,0.4), 0 0 60px rgba(198,120,221,0.2);
-    transform: scale(1.1) rotate(-5deg);
+    border-color: rgba(198,120,221,0.55);
+    box-shadow: 0 0 22px rgba(198,120,221,0.35);
     color: #fff;
+    transform: scale(1.08) rotate(-5deg);
   }
 
-  /* Platform name */
-  .social-platform-name {
+  .soc-name {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.82em;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    transition: color 0.3s ease;
+    font-size: 0.72em; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.52);
+    transition: color 0.3s;
   }
-  .social-card:hover .social-platform-name {
-    color: rgba(255,255,255,0.9);
-  }
+  .soc-card:hover .soc-name { color: rgba(255,255,255,0.9); }
 
-  /* "Connect" cta */
-  .social-cta {
+  .soc-cta {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.68em;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(198,120,221,0.5);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.3s ease;
+    font-size: 0.62em; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(198,120,221,0.48);
+    display: flex; align-items: center; gap: 4px;
+    transition: color 0.3s;
   }
-  .social-cta::after {
-    content: '→';
-    display: inline-block;
-    transition: transform 0.3s ease;
-  }
-  .social-card:hover .social-cta {
-    color: #c678dd;
-  }
-  .social-card:hover .social-cta::after {
-    transform: translateX(4px);
-  }
+  .soc-cta-arrow { display:inline-block; transition:transform 0.3s ease; }
+  .soc-card:hover .soc-cta { color: #c678dd; }
+  .soc-card:hover .soc-cta-arrow { transform: translateX(4px); }
 
-  /* ── OR DIVIDER BETWEEN CARDS ── */
-  .social-or {
+  /* OR separator */
+  .soc-or {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    gap: 5px;
+    flex-shrink: 0;
     padding: 0 4px;
   }
-  .social-or span {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.65em;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(198,120,221,0.35);
+  .soc-or-line {
+    display: block; width:1px; height:22px;
+    background: linear-gradient(180deg,transparent,rgba(198,120,221,0.28),transparent);
   }
-  .social-or i {
-    display: block;
-    width: 1px;
-    height: 30px;
-    background: linear-gradient(180deg, transparent, rgba(198,120,221,0.3), transparent);
+  .soc-or-text {
+    font-family:'Outfit',sans-serif; font-size:0.6em; font-weight:700;
+    letter-spacing:2px; text-transform:uppercase;
+    color:rgba(198,120,221,0.28);
   }
 
-  /* ── TAGLINE UNDER CARDS ── */
-  .social-tagline {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.78em;
-    color: rgba(255,255,255,0.22);
-    margin-top: 36px;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  /* Tagline */
+  .soc-tagline {
+    font-family:'Outfit',sans-serif; font-size:0.74em;
+    color:rgba(255,255,255,0.18); margin-top:28px;
+    letter-spacing:0.4px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
   }
-  .social-tagline .tl-dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: rgba(198,120,221,0.4);
-    display: inline-block;
-    animation: tlDotBlink 3s ease-in-out infinite;
-  }
-  .social-tagline .tl-dot:nth-child(2){animation-delay:1s}
-  .social-tagline .tl-dot:nth-child(3){animation-delay:2s}
-  @keyframes tlDotBlink {
-    0%,80%,100%{opacity:0.4} 40%{opacity:1}
+  .soc-star { color:#c678dd; display:inline-block; animation:starSpin 5s linear infinite; }
+  @keyframes starSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* ════════════════════════════
+     SHARED
+  ════════════════════════════ */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ════════════════════════════
+     MOBILE  ≤ 767px
+  ════════════════════════════ */
+  @media (max-width: 767px) {
+    .home-section {
+      padding-top: 90px;
+      padding-bottom: 50px;
+    }
+    /* Stack: text first, image second */
+    .hero-text-col { order:1; padding-bottom: 10px; }
+    .hero-img-col  { order:2; padding-top: 20px; padding-bottom: 0; }
+
+    .h-im       { font-size: 1.5em; }
+    .h-fullname { font-size: 2em; }
+    .h-underline{ margin-bottom: 16px; }
+
+    /* Rings hidden — too big on mobile */
+    .logo-ring-1, .logo-ring-2 { display:none; }
+    .logo-glow { width:200px; height:200px; }
+    .hero-logo-img { max-height: 260px !important; }
+
+    /* Stats clean row */
+    .h-stats { gap: 14px 22px; }
+    .h-stat-num { font-size: 1.1em; }
+
+    /* Social cards — side by side even on mobile */
+    .soc-cards { gap: 12px; }
+    .soc-card { width: 130px; padding: 20px 12px 16px; }
+    .soc-icon { width:50px; height:50px; font-size:1.3em; }
+    .soc-or { flex-direction:row; gap:4px; }
+    .soc-or-line { width:16px; height:1px; background:linear-gradient(90deg,transparent,rgba(198,120,221,0.28),transparent); }
   }
 `;
 
 function Home() {
   useEffect(() => {
-    if (!document.getElementById("home-v4-styles")) {
+    if (!document.getElementById("home-v6-styles")) {
       const tag = document.createElement("style");
-      tag.id = "home-v4-styles";
+      tag.id = "home-v6-styles";
       tag.innerHTML = homeStyles;
       document.head.appendChild(tag);
     }
-    return () => document.getElementById("home-v4-styles")?.remove();
+    return () => document.getElementById("home-v6-styles")?.remove();
   }, []);
 
   return (
     <section>
-      {/* ════════════════════ HERO ════════════════════ */}
+      {/* ── HERO ── */}
       <Container fluid className="home-section" id="home">
         <div className="hero-orb hero-orb-1" />
         <div className="hero-orb hero-orb-2" />
-        <div className="hero-orb hero-orb-3" />
-        <div className="hero-corner hero-corner-tl" />
-        <div className="hero-corner hero-corner-tr" />
-        <div className="hero-corner hero-corner-bl" />
-        <div className="hero-corner hero-corner-br" />
         <Particle />
 
         <Container className="home-content">
           <Row className="align-items-center">
             {/* LEFT */}
-            <Col md={7} className="home-header">
-              <h1 style={{ paddingBottom: 15 }} className="heading">
+            <Col md={7} className="hero-text-col">
+              {/* Greeting */}
+              <p className="h-greeting">
                 Hi There!{" "}
-                <span className="wave" role="img" aria-labelledby="wave">
+                <span className="wave" role="img" aria-label="wave">
                   👋🏻
                 </span>
-              </h1>
+              </p>
 
-              <h1 className="heading-name">
-                I'M
-                <br />
-                <strong className="main-name"> SIDDHANT GARG</strong>
-                <span className="name-underline" />
-              </h1>
+              {/* Name */}
+              <div className="h-name-block">
+                <span className="h-im">I'M</span>
+                <span className="h-fullname">SIDDHANT GARG</span>
+              </div>
 
-              <div
-                style={{ padding: "50px 0 0 0", textAlign: "left" }}
-                className="type-wrapper"
-              >
+              {/* Underline */}
+              <span className="h-underline" />
+
+              {/* Typing text — isolated block with min-height */}
+              <div className="h-type-wrap">
                 <Type />
               </div>
 
-              <div className="hero-stats">
-                <div className="hero-stat">
-                  <span className="hero-stat-num">40+</span>
-                  <span className="hero-stat-label">Leads Generated</span>
+              {/* Stats — always below typing text */}
+              <div className="h-stats">
+                <div className="h-stat">
+                  <span className="h-stat-num">40+</span>
+                  <span className="h-stat-label">Leads Generated</span>
                 </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">200%</span>
-                  <span className="hero-stat-label">Social Growth</span>
+                <div className="h-stat">
+                  <span className="h-stat-num">200%</span>
+                  <span className="h-stat-label">Social Growth</span>
                 </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">6</span>
-                  <span className="hero-stat-label">Live Projects</span>
+                <div className="h-stat">
+                  <span className="h-stat-num">6</span>
+                  <span className="h-stat-label">Live Projects</span>
                 </div>
               </div>
             </Col>
 
             {/* RIGHT */}
-            <Col md={5} className="home-img-col" style={{ paddingBottom: 20 }}>
+            <Col md={5} className="hero-img-col">
               <div className="logo-ring logo-ring-1" />
               <div className="logo-ring logo-ring-2" />
-              <div className="logo-ring logo-ring-3" />
               <div className="logo-glow" />
               <img
                 src={homeLogo}
                 alt="home pic"
-                className="img-fluid home-logo-img"
+                className="img-fluid hero-logo-img"
               />
             </Col>
           </Row>
         </Container>
       </Container>
 
-      {/* ════════════════════ ABOUT ════════════════════ */}
+      {/* ── ABOUT ── */}
       <Home2 />
 
-      {/* ════════════════════ FIND ME ON ════════════════════ */}
-      <div className="social-section-wrap">
+      {/* ── FIND ME ON ── */}
+      <div className="social-section">
         <Container>
-          <div className="social-inner">
-            {/* Heading */}
-            <h1 className="social-heading">
-              Find Me{" "}
-              <span className="purple" style={{ color: "#c678dd" }}>
-                On
-              </span>
+          <div className="social-center">
+            <h1 className="social-h1">
+              Find Me <span style={{ color: "#c678dd" }}>On</span>
             </h1>
 
-            {/* Animated divider */}
-            <div className="social-divider">
-              <div className="sd-line" />
-              <div className="sd-dot" />
-              <div className="sd-line" />
+            <div className="soc-div">
+              <div className="soc-div-line" />
+              <div className="soc-div-dot" />
+              <div className="soc-div-line" />
             </div>
 
-            {/* Subtitle */}
-            <p className="social-subtitle">
-              Feel free to <span className="purple">connect</span> with me
+            <p className="social-sub">
+              Feel free to{" "}
+              <span
+                className="purple-txt"
+                style={{ color: "#c678dd", fontWeight: 600 }}
+              >
+                connect
+              </span>{" "}
+              with me
             </p>
 
-            {/* Cards */}
-            <div className="social-cards-row">
+            <div className="soc-cards">
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                href="https://www.linkedin.com/in/siddhant-garg-979378249"
                 target="_blank"
                 rel="noreferrer"
-                className="social-card"
+                className="soc-card"
               >
-                <div className="social-icon-circle">
+                <div className="soc-icon">
                   <FaLinkedinIn />
                 </div>
-                <span className="social-platform-name">LinkedIn</span>
-                <span className="social-cta">Connect</span>
+                <span className="soc-name">LinkedIn</span>
+                <span className="soc-cta">
+                  Connect <span className="soc-cta-arrow">→</span>
+                </span>
               </a>
 
-              {/* OR divider */}
-              <div className="social-or">
-                <i />
-                <span>or</span>
-                <i />
+              {/* OR */}
+              <div className="soc-or">
+                <span className="soc-or-line" />
+                <span className="soc-or-text">or</span>
+                <span className="soc-or-line" />
               </div>
 
               {/* Instagram */}
               <a
-                href="https://www.instagram.com/berealsid_?igsh=MTR4Z2xvNnFqZTY1MQ%3D%3D&utm_source=qr"
+                href="https://www.instagram.com/berealsid_"
                 target="_blank"
                 rel="noreferrer"
-                className="social-card"
+                className="soc-card"
               >
-                <div className="social-icon-circle">
+                <div className="soc-icon">
                   <AiFillInstagram />
                 </div>
-                <span className="social-platform-name">Instagram</span>
-                <span className="social-cta">Follow</span>
+                <span className="soc-name">Instagram</span>
+                <span className="soc-cta">
+                  Follow <span className="soc-cta-arrow">→</span>
+                </span>
               </a>
             </div>
 
-            {/* Tagline */}
-            <p className="social-tagline">
-              <span className="tl-dot" />
+            <p className="soc-tagline">
+              <span className="soc-star">✦</span>
               Let's build something extraordinary together
-              <span className="tl-dot" />
-              <span className="tl-dot" />
+              <span className="soc-star">✦</span>
             </p>
           </div>
         </Container>
