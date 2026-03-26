@@ -1,11 +1,20 @@
 import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
+
 import macOs from "../../Assets/TechIcons/Apple MacOSX.svg";
-import chrome from "../../Assets/TechIcons/Google Chrome.svg";
 import vsCode from "../../Assets/TechIcons/vscode.svg";
+import chrome from "../../Assets/TechIcons/Google Chrome.svg";
 import canva from "../../Assets/TechIcons/Canva.svg";
-import chatgpt from "../../Assets/TechIcons/chatgpt.svg";
 import photoshop from "../../Assets/TechIcons/Photoshop.svg";
+import chatgpt from "../../Assets/TechIcons/chatgpt.svg";
+import gemini from "../../Assets/TechIcons/gemini.svg";
+import claude from "../../Assets/TechIcons/claude.svg";
+import claudeCode from "../../Assets/TechIcons/ClaudeCode.svg";
+import render from "../../Assets/TechIcons/Render.svg";
+import railway from "../../Assets/TechIcons/Railway.png";
+import hoppscotch from "../../Assets/TechIcons/Hoppscotch.svg";
+import kling from "../../Assets/TechIcons/kling.svg";
+import postman from "../../Assets/TechIcons/Postman.svg";
 
 const toolStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
@@ -27,12 +36,20 @@ const toolStyles = `
     animation: toolCardIn 0.6s cubic-bezier(0.22,1,0.36,1) both;
   }
 
-  .sg-tool-card:nth-child(1){animation-delay:0.05s}
-  .sg-tool-card:nth-child(2){animation-delay:0.12s}
-  .sg-tool-card:nth-child(3){animation-delay:0.19s}
-  .sg-tool-card:nth-child(4){animation-delay:0.26s}
-  .sg-tool-card:nth-child(5){animation-delay:0.33s}
-  .sg-tool-card:nth-child(6){animation-delay:0.40s}
+  .sg-tool-card:nth-child(1) {animation-delay:0.05s}
+  .sg-tool-card:nth-child(2) {animation-delay:0.10s}
+  .sg-tool-card:nth-child(3) {animation-delay:0.15s}
+  .sg-tool-card:nth-child(4) {animation-delay:0.20s}
+  .sg-tool-card:nth-child(5) {animation-delay:0.25s}
+  .sg-tool-card:nth-child(6) {animation-delay:0.30s}
+  .sg-tool-card:nth-child(7) {animation-delay:0.35s}
+  .sg-tool-card:nth-child(8) {animation-delay:0.40s}
+  .sg-tool-card:nth-child(9) {animation-delay:0.45s}
+  .sg-tool-card:nth-child(10){animation-delay:0.50s}
+  .sg-tool-card:nth-child(11){animation-delay:0.55s}
+  .sg-tool-card:nth-child(12){animation-delay:0.60s}
+  .sg-tool-card:nth-child(13){animation-delay:0.65s}
+  .sg-tool-card:nth-child(14){animation-delay:0.70s}
 
   @keyframes toolCardIn {
     from { opacity: 0; transform: translateY(20px) scale(0.92); }
@@ -98,11 +115,19 @@ const toolStyles = `
 
 const tools = [
   { src: macOs, label: "Mac OS" },
+  { src: vsCode, label: "VS Code" },
+  { src: chrome, label: "Chrome" },
   { src: canva, label: "Canva" },
   { src: photoshop, label: "Photoshop" },
+  { src: postman, label: "Postman" },
   { src: chatgpt, label: "ChatGPT" },
-  { src: chrome, label: "Chrome" },
-  { src: vsCode, label: "VS Code" },
+  { src: gemini, label: "Gemini" },
+  { src: claude, label: "Claude" },
+  { src: claudeCode, label: "Claude Code" },
+  { src: render, label: "Render" },
+  { src: railway, label: "Railway" },
+  { src: hoppscotch, label: "Hoppscotch" },
+  { src: kling, label: "Kling AI" },
 ];
 
 function Toolstack() {

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="sb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3ECF8E"/>
+      <stop offset="100%" stop-color="#1A9E65"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="#0A0A0A"/>
+  <!-- Supabase lightning bolt -->
+  <path d="M58 14 L28 54 L48 54 L42 86 L72 46 L52 46 Z" fill="url(#sb)"/>
+</svg>
