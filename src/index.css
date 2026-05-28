@@ -1,0 +1,28 @@
+/* ─────────────────────────────────────
+   GLOBAL FONT — single import
+───────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ─────────────────────────────────────
+   BODY BASE
+───────────────────────────────────── */
+body {
+  margin: 0;
+  font-family: 'Outfit', 'PT Mono', monospace !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #050010 !important;
+  background-image: none !important;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
