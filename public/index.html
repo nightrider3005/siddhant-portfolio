@@ -3,36 +3,171 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon-2.svg" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon-2.svg" type="image/svg+xml" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Primary Color & Theme -->
   <meta name="theme-color" content="#0c0513" />
 
-  <title>Siddhant Garg | Growth Strategist</title>
+  <!-- ============================================================
+       PRIMARY SEO META TAGS
+  ============================================================ -->
+  <title>Siddhant Garg | Growth Strategist & Brand Builder</title>
 
   <meta name="description"
-    content="Siddhant Garg is a Growth Strategist and Brand Builder with a technical foundation in Computer Science. Specializing in structured strategy, execution systems, and psychology-driven marketing." />
+    content="Siddhant Garg is a Growth Strategist and Brand Builder with a Computer Science background. Expert in psychology-driven marketing, brand systems, execution frameworks, and data-driven growth strategy." />
 
+  <!-- Expanded, name-first keyword list for personal brand ranking -->
   <meta name="keywords"
-    content="Siddhant Garg, Growth Strategist, Brand Strategy, Business Development, Marketing Strategy, Psychology Marketing, Portfolio" />
+    content="Siddhant Garg, siddhant garg, Siddhant Garg Growth Strategist, Siddhant Garg portfolio, Siddhant Garg brand builder, Siddhant Garg marketing, siddhantgarg.online, Growth Strategist India, Brand Strategy, Brand Builder, Business Development, Marketing Strategy, Psychology Marketing, Growth Hacking, Execution Systems, Computer Science, CS portfolio, Digital Marketing, Content Strategy, Growth Marketing, Startup Growth, B2B Growth Strategy, Data-Driven Marketing, Go-To-Market Strategy, Product Marketing, Growth Framework" />
 
   <meta name="author" content="Siddhant Garg" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- Canonical URL (critical for avoiding duplicate content) -->
+  <link rel="canonical" href="https://www.siddhantgarg.online/" />
+
+  <!-- ============================================================
+       OPEN GRAPH / FACEBOOK / LINKEDIN
+  ============================================================ -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Siddhant Garg | Growth Strategist" />
+  <meta property="og:site_name" content="Siddhant Garg" />
+  <meta property="og:title" content="Siddhant Garg | Growth Strategist & Brand Builder" />
   <meta property="og:description"
-    content="Technically grounded growth strategist building scalable systems using psychology, structured execution, and data-driven strategy." />
-  <meta property="og:image" content="%PUBLIC_URL%/favicon.png" />
+    content="Technically grounded growth strategist building scalable systems using psychology, structured execution, and data-driven strategy. CS background meets brand thinking." />
+  <meta property="og:image" content="https://www.siddhantgarg.online/favicon.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Siddhant Garg - Growth Strategist Portfolio" />
+  <meta property="og:url" content="https://www.siddhantgarg.online/" />
+  <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter -->
+  <!-- ============================================================
+       TWITTER / X CARD
+  ============================================================ -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Siddhant Garg | Growth Strategist" />
+  <meta name="twitter:site" content="@siddhantgarg" />
+  <meta name="twitter:creator" content="@siddhantgarg" />
+  <meta name="twitter:title" content="Siddhant Garg | Growth Strategist & Brand Builder" />
   <meta name="twitter:description"
-    content="Growth Strategy, Brand Systems, Execution Frameworks and Psychology-driven Marketing." />
-  <meta name="twitter:image" content="%PUBLIC_URL%/favicon.png" />
+    content="Growth Strategy, Brand Systems, Execution Frameworks, and Psychology-driven Marketing. CS meets brand thinking." />
+  <meta name="twitter:image" content="https://www.siddhantgarg.online/favicon.png" />
+  <meta name="twitter:image:alt" content="Siddhant Garg - Growth Strategist" />
 
+  <!-- ============================================================
+       STRUCTURED DATA — JSON-LD (Person Schema)
+       This tells Google exactly who you are — critical for name search
+  ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Siddhant Garg",
+    "alternateName": "Siddhant Garg Growth Strategist",
+    "url": "https://www.siddhantgarg.online/",
+    "image": "https://www.siddhantgarg.online/favicon.png",
+    "sameAs": [
+      "https://www.linkedin.com/in/siddhantgarg3005",
+      "https://github.com/siddhantgarg3005"
+    ],
+    "jobTitle": "Growth Strategist",
+    "description": "Growth Strategist and Brand Builder with a technical foundation in Computer Science. Specializing in structured strategy, execution systems, and psychology-driven marketing.",
+    "knowsAbout": [
+      "Growth Strategy",
+      "Brand Building",
+      "Psychology-driven Marketing",
+      "Execution Systems",
+      "Business Development",
+      "Computer Science",
+      "Data-driven Strategy",
+      "Content Strategy",
+      "Go-To-Market Strategy"
+    ],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Computer Science Graduate"
+    }
+  }
+  </script>
+
+  <!-- ============================================================
+       STRUCTURED DATA — JSON-LD (WebSite Schema + Sitelinks Search)
+  ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Siddhant Garg",
+    "url": "https://www.siddhantgarg.online/",
+    "description": "Portfolio of Siddhant Garg – Growth Strategist, Brand Builder, and CS graduate.",
+    "author": {
+      "@type": "Person",
+      "name": "Siddhant Garg"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.siddhantgarg.online/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ============================================================
+       STRUCTURED DATA — JSON-LD (BreadcrumbList for site structure)
+  ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.siddhantgarg.online/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "About",
+        "item": "https://www.siddhantgarg.online/about"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Projects",
+        "item": "https://www.siddhantgarg.online/project"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Creative Lab",
+        "item": "https://www.siddhantgarg.online/creative"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Resume",
+        "item": "https://www.siddhantgarg.online/resume"
+      }
+    ]
+  }
+  </script>
+
+  <!-- ============================================================
+       PWA & MANIFEST
+  ============================================================ -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
+
+  <!-- Performance: preconnect to Google Fonts if used -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 </head>
 

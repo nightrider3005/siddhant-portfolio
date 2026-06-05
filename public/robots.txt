@@ -1,3 +1,11 @@
-# https://www.robotstxt.org/robotstxt.html
+# Robots.txt for siddhantgarg.online
+# Allow all search engine crawlers
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Block access to static assets that don't need indexing
+Disallow: /static/
+
+# Sitemap location
+Sitemap: https://www.siddhantgarg.online/sitemap.xml
