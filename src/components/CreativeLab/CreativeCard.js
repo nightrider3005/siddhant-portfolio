@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 
 const cardStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -151,120 +152,128 @@ const cardStyles = `
   }
 
   /* ═══════════════════════════════════
-     LIGHTBOX MODAL (PERFECT STICKY HEADER & FOOTER)
+     FULL-VIEWPORT PORTAL LIGHTBOX MODAL
   ═══════════════════════════════════ */
   .cc-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 999999 !important;
-    background: rgba(3, 0, 10, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 20px 84px 20px;
-    animation: fadeIn 0.2s ease;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999999 !important;
+    background: rgba(2, 0, 8, 0.92) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 16px 80px 16px !important;
+    animation: ccFadeIn 0.2s ease;
+    box-sizing: border-box !important;
+  }
+
+  @keyframes ccFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   .cc-modal {
-    position: relative;
-    width: min(740px, 92vw);
-    max-height: min(720px, 76vh);
-    background: #080214;
-    border: 1px solid rgba(0, 243, 255, 0.45);
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 243, 255, 0.25);
-    animation: modalIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative !important;
+    width: min(740px, 94vw) !important;
+    max-height: min(720px, 78vh) !important;
+    background: #080214 !important;
+    border: 1px solid rgba(0, 243, 255, 0.5) !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 243, 255, 0.3) !important;
+    animation: ccModalIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.94) translateY(14px); }
+  @keyframes ccModalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(14px); }
     to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  /* Sticky Top Bar - Always Visible Above Image */
   .cc-modal-top-bar {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 18px;
-    background: rgba(10, 4, 25, 0.96);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 18px !important;
+    background: rgba(12, 5, 30, 0.98) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
   }
 
   .cc-modal-back-btn {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.84em;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, rgba(0, 243, 255, 0.35), rgba(147, 51, 234, 0.45));
-    border: 1px solid rgba(0, 243, 255, 0.65);
-    padding: 7px 18px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 0 16px rgba(0, 243, 255, 0.3);
-    pointer-events: all;
-    user-select: none;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.85em !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.35), rgba(147, 51, 234, 0.5)) !important;
+    border: 1px solid rgba(0, 243, 255, 0.65) !important;
+    padding: 8px 18px !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 0 16px rgba(0, 243, 255, 0.3) !important;
+    pointer-events: all !important;
+    user-select: none !important;
   }
   .cc-modal-back-btn:hover, .cc-modal-back-btn:active {
-    background: linear-gradient(135deg, rgba(0, 243, 255, 0.55), rgba(147, 51, 234, 0.65));
-    color: #fff;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.55), rgba(147, 51, 234, 0.7)) !important;
+    color: #fff !important;
   }
 
   .cc-modal-close-icon {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.22);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: all 0.2s ease;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    font-size: 0.95em !important;
+    transition: all 0.2s ease !important;
   }
-  .cc-modal-close-icon:hover {
-    background: rgba(255,0,127,0.3);
-    border-color: #ff007f;
+  .cc-modal-close-icon:hover, .cc-modal-close-icon:active {
+    background: rgba(255,0,127,0.35) !important;
+    border-color: #ff007f !important;
   }
 
-  /* Scrollable Body Area */
   .cc-modal-scroll-area {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .cc-modal-img-container {
-    width: 100%;
-    max-height: 360px;
-    overflow: hidden;
-    background: #04040c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    width: 100% !important;
+    max-height: 360px !important;
+    overflow: hidden !important;
+    background: #04040c !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   }
 
   .cc-modal-img {
-    width: 100%;
-    max-height: 360px;
-    object-fit: contain;
-    display: block;
+    width: 100% !important;
+    max-height: 360px !important;
+    object-fit: contain !important;
+    display: block !important;
   }
 
   .cc-modal-body {
-    padding: 22px 26px 26px;
+    padding: 22px 26px 26px !important;
   }
 
   .cc-modal-title {
@@ -283,44 +292,42 @@ const cardStyles = `
     margin: 0 0 16px 0 !important;
   }
 
-  /* Sticky Bottom Footer - Always Visible Above Dock */
   .cc-modal-footer {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    background: rgba(10, 4, 25, 0.96);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 20px !important;
+    background: rgba(12, 5, 30, 0.98) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
   }
 
   .cc-modal-close-btn {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.84em;
-    font-weight: 700;
-    color: rgba(255,255,255,0.9);
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.22);
-    padding: 7px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.85em !important;
+    font-weight: 700 !important;
+    color: rgba(255,255,255,0.95) !important;
+    background: rgba(255,255,255,0.12) !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    padding: 8px 22px !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
   }
   .cc-modal-close-btn:hover, .cc-modal-close-btn:active {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
+    background: rgba(255,255,255,0.25) !important;
+    color: #fff !important;
   }
 
   @media (max-width: 767px) {
-    .cc-modal-backdrop { padding: 10px 10px 80px 10px; }
-    .cc-modal { width: 94vw; max-height: 72vh; border-radius: 16px; }
-    .cc-modal-body { padding: 16px 16px 20px; }
-    .cc-modal-top-bar { padding: 10px 14px; }
-    .cc-modal-back-btn { font-size: 0.78em; padding: 6px 14px; }
-    .cc-modal-img-container { max-height: 260px; }
-    .cc-modal-img { max-height: 260px; }
+    .cc-modal-backdrop { padding: 10px 10px 80px 10px !important; }
+    .cc-modal { width: 94vw !important; max-height: 72vh !important; border-radius: 16px !important; }
+    .cc-modal-body { padding: 16px 16px 20px !important; }
+    .cc-modal-top-bar { padding: 10px 14px !important; }
+    .cc-modal-back-btn { font-size: 0.78em !important; padding: 6px 14px !important; }
+    .cc-modal-img-container { max-height: 260px !important; }
+    .cc-modal-img { max-height: 260px !important; }
   }
 `;
 
@@ -392,62 +399,67 @@ function CreativeCard({ title, cardDesc, modalDesc, images, index, tags, wide })
         </div>
       </div>
 
-      {/* ── LIGHTBOX MODAL ── */}
-      {open && (
-        <div className="cc-modal-backdrop" onClick={handleClose}>
-          <div className="cc-modal" onClick={(e) => e.stopPropagation()}>
-            {/* Sticky Top Bar */}
-            <div className="cc-modal-top-bar">
-              <button
-                className="cc-modal-back-btn"
-                onClick={handleClose}
-                onPointerDown={handleClose}
-              >
-                ← Back to Creative Lab
-              </button>
-              <button
-                className="cc-modal-close-icon"
-                onClick={handleClose}
-                onPointerDown={handleClose}
-                aria-label="Close"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Scrollable Content */}
-            <div className="cc-modal-scroll-area">
-              <div className="cc-modal-img-container">
-                <img
-                  src={images[0]}
-                  alt={title}
-                  className="cc-modal-img"
-                  loading="lazy"
-                />
+      {/* ── LIGHTBOX PORTAL MODAL ── */}
+      {open &&
+        ReactDOM.createPortal(
+          <div className="cc-modal-backdrop" onClick={handleClose}>
+            <div className="cc-modal" onClick={(e) => e.stopPropagation()}>
+              {/* Top Bar */}
+              <div className="cc-modal-top-bar">
+                <button
+                  className="cc-modal-back-btn"
+                  onClick={handleClose}
+                  onPointerDown={handleClose}
+                  onTouchEnd={handleClose}
+                >
+                  ← Back to Creative Lab
+                </button>
+                <button
+                  className="cc-modal-close-icon"
+                  onClick={handleClose}
+                  onPointerDown={handleClose}
+                  onTouchEnd={handleClose}
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
               </div>
 
-              <div className="cc-modal-body">
-                <h2 className="cc-modal-title">{title}</h2>
-                <p className="cc-modal-desc">{modalDesc}</p>
+              {/* Scrollable Area */}
+              <div className="cc-modal-scroll-area">
+                <div className="cc-modal-img-container">
+                  <img
+                    src={images[0]}
+                    alt={title}
+                    className="cc-modal-img"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="cc-modal-body">
+                  <h2 className="cc-modal-title">{title}</h2>
+                  <p className="cc-modal-desc">{modalDesc}</p>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="cc-modal-footer">
+                <span style={{ fontSize: "0.78em", color: "rgba(255,255,255,0.45)", fontFamily: "Outfit", fontWeight: 700 }}>
+                  FRAME {num}
+                </span>
+                <button
+                  className="cc-modal-close-btn"
+                  onClick={handleClose}
+                  onPointerDown={handleClose}
+                  onTouchEnd={handleClose}
+                >
+                  Close Insight
+                </button>
               </div>
             </div>
-
-            {/* Sticky Bottom Footer */}
-            <div className="cc-modal-footer">
-              <span style={{ fontSize: "0.78em", color: "rgba(255,255,255,0.45)", fontFamily: "Outfit", fontWeight: 700 }}>
-                FRAME {num}
-              </span>
-              <button
-                className="cc-modal-close-btn"
-                onClick={handleClose}
-                onPointerDown={handleClose}
-              >
-                Close Insight
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }
