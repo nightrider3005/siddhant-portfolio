@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 const cardStyles = `
@@ -22,6 +22,7 @@ const cardStyles = `
     display: flex;
     flex-direction: column;
     min-height: 380px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .creative-card:hover {
@@ -172,6 +173,7 @@ const cardStyles = `
     padding: 16px 16px 80px 16px !important;
     animation: ccFadeIn 0.2s ease;
     box-sizing: border-box !important;
+    -webkit-tap-highlight-color: transparent;
   }
 
   @keyframes ccFadeIn {
@@ -223,6 +225,7 @@ const cardStyles = `
     box-shadow: 0 0 16px rgba(0, 243, 255, 0.3) !important;
     pointer-events: all !important;
     user-select: none !important;
+    -webkit-tap-highlight-color: transparent;
   }
   .cc-modal-back-btn:hover, .cc-modal-back-btn:active {
     background: linear-gradient(135deg, rgba(0, 243, 255, 0.55), rgba(147, 51, 234, 0.7)) !important;
@@ -242,6 +245,7 @@ const cardStyles = `
     cursor: pointer !important;
     font-size: 0.95em !important;
     transition: all 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent;
   }
   .cc-modal-close-icon:hover, .cc-modal-close-icon:active {
     background: rgba(255,0,127,0.35) !important;
@@ -314,6 +318,7 @@ const cardStyles = `
     border-radius: 20px !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent;
   }
   .cc-modal-close-btn:hover, .cc-modal-close-btn:active {
     background: rgba(255,255,255,0.25) !important;
@@ -333,13 +338,20 @@ const cardStyles = `
 
 function CreativeCard({ title, cardDesc, modalDesc, images, index, tags, wide }) {
   const [open, setOpen] = useState(false);
+  const lastCloseTime = useRef(0);
   const num = String(index + 1).padStart(2, "0");
+
+  const handleOpen = (e) => {
+    if (Date.now() - lastCloseTime.current < 450) return;
+    setOpen(true);
+  };
 
   const handleClose = (e) => {
     if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e.stopPropagation) e.stopPropagation();
+      if (e.preventDefault) e.preventDefault();
     }
+    lastCloseTime.current = Date.now();
     setOpen(false);
   };
 
@@ -364,7 +376,7 @@ function CreativeCard({ title, cardDesc, modalDesc, images, index, tags, wide })
       {/* ── CARD ── */}
       <div
         className={`creative-card${wide ? " spotlight-card" : ""}`}
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
       >
         <div className="cc-shimmer" />
 
@@ -409,16 +421,12 @@ function CreativeCard({ title, cardDesc, modalDesc, images, index, tags, wide })
                 <button
                   className="cc-modal-back-btn"
                   onClick={handleClose}
-                  onPointerDown={handleClose}
-                  onTouchEnd={handleClose}
                 >
                   ← Back to Creative Lab
                 </button>
                 <button
                   className="cc-modal-close-icon"
                   onClick={handleClose}
-                  onPointerDown={handleClose}
-                  onTouchEnd={handleClose}
                   aria-label="Close"
                 >
                   ✕
@@ -450,8 +458,6 @@ function CreativeCard({ title, cardDesc, modalDesc, images, index, tags, wide })
                 <button
                   className="cc-modal-close-btn"
                   onClick={handleClose}
-                  onPointerDown={handleClose}
-                  onTouchEnd={handleClose}
                 >
                   Close Insight
                 </button>
