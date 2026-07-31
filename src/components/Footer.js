@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { AiFillInstagram } from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 
 function Footer() {
   let date = new Date();
@@ -10,7 +9,7 @@ function Footer() {
     <Container fluid className="footer">
       <Row>
         <Col md="4" className="footer-copywright">
-          <h3><h3>Designed and Strategically Built by SG</h3></h3>
+          <h3>Designed and Strategically Built by SG</h3>
           <p className="hand-marker" style={{
             fontSize: "0.95em",
             color: "rgba(255,255,255,0.3)",
@@ -28,22 +27,22 @@ function Footer() {
           <ul className="footer-icons">
             <li className="social-icons">
               <a
-                href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                href="mailto:siddhantgarg563@gmail.com"
                 style={{ color: "white" }}
-                target="_blank"
-                rel="noopener noreferrer"
+                title="Email"
               >
-                <FaLinkedinIn />
+                <FaEnvelope />
               </a>
             </li>
             <li className="social-icons">
               <a
-                href="https://www.instagram.com/berealsid_?igsh=MTR4Z2xvNnFqZTY1MQ%3D%3D&utm_source=qr"
+                href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
                 style={{ color: "white" }}
                 target="_blank"
                 rel="noopener noreferrer"
+                title="LinkedIn"
               >
-                <AiFillInstagram />
+                <FaLinkedinIn />
               </a>
             </li>
           </ul>

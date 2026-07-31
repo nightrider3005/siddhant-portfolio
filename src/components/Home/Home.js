@@ -3,8 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import Home2 from "./Home2";
 import Type from "./Type";
-import { AiFillInstagram } from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 
 
 const homeStyles = `
@@ -700,7 +699,7 @@ function Home() {
             <div className="soc-cards">
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/siddhant-garg-979378249"
+                href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
                 target="_blank"
                 rel="noreferrer"
                 className="soc-card"
@@ -721,19 +720,17 @@ function Home() {
                 <span className="soc-or-line" />
               </div>
 
-              {/* Instagram */}
+              {/* Email */}
               <a
-                href="https://www.instagram.com/berealsid_"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:siddhantgarg563@gmail.com"
                 className="soc-card"
               >
                 <div className="soc-icon">
-                  <AiFillInstagram />
+                  <FaEnvelope />
                 </div>
-                <span className="soc-name">Instagram</span>
+                <span className="soc-name">Email</span>
                 <span className="soc-cta">
-                  Follow <span className="soc-cta-arrow">→</span>
+                  Send Mail <span className="soc-cta-arrow">→</span>
                 </span>
               </a>
             </div>
