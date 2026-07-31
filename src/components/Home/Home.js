@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import homeLogo from "../../Assets/home.png";
 import Particle from "../Particle";
 import Home2 from "./Home2";
 import Type from "./Type";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 
-/* ─── Per-visitor greeting map ─── */
-const GREETINGS = {
-  recruiter: "Hi there, HR. I know you scrolled 50 templates today. Let me save you a coffee.\u00a0\u2615",
-  client: "You want growth. I engineer it. Let\u2019s skip the small talk.\u00a0\ud83d\ude80",
-  curious: "You wandered in. Good. Stay a while. Things get weird.\u00a0\ud83d\udc40",
-  default: "Hi there\u00a0\ud83d\udc4b",
-};
 
 const homeStyles = `
   /* ════════════════════════════
@@ -160,9 +152,11 @@ const homeStyles = `
   /* Type wrapper */
   .h-type-wrap {
     width: 100%;
-    min-height: 52px;
+    min-height: 64px;
     margin-bottom: 22px;
     animation: fadeUp 0.7s ease 0.7s both;
+    display: flex;
+    align-items: center;
   }
 
   /* Stats */
@@ -234,26 +228,24 @@ const homeStyles = `
   }
 
   /* Spinning conic-gradient ring */
-  .logo-ring-conic {
-    position: absolute;
-    width: 420px; height: 420px;
-    border-radius: 50%;
-    background: conic-gradient(#7c3aed 0deg, #00f3ff 90deg, #ff007f 180deg, #7c3aed 360deg);
-    animation: conicSpin 8s linear infinite;
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
-    will-change: transform;
+  /* ─── Mascot float ─── */
+  .hero-mascot-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-  @keyframes conicSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-  .logo-ring-2 {
+  .hero-mascot-glow {
     position: absolute;
     width: 320px; height: 320px;
     border-radius: 50%;
-    border: 1px dashed rgba(124,58,237,0.18);
-    animation: rSpin 16s linear infinite reverse;
+    background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 65%);
+    filter: blur(28px);
+    pointer-events: none;
+    animation: lgPulse 4s ease-in-out infinite;
   }
-  @keyframes rSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes lgPulse { 0%,100%{opacity:0.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.12)} }
 
   .logo-glow {
     position: absolute;
@@ -266,17 +258,73 @@ const homeStyles = `
   }
   @keyframes lgPulse { 0%,100%{opacity:0.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.12)} }
 
-  .hero-logo-img {
-    max-height: 400px !important;
+  /* Bhonpu mascot */
+  .hero-mascot-img {
+    max-height: 380px !important;
     width: 100%;
     object-fit: contain;
     position: relative; z-index: 2;
-    animation: imgFloat 4s ease-in-out infinite, imgReveal 1s ease 0.5s both;
-    filter: drop-shadow(0 0 28px rgba(147,51,234,0.22));
+    animation: mascotFloat 3.5s ease-in-out infinite, imgReveal 1s ease 0.5s both;
+    filter: drop-shadow(0 0 32px rgba(147,51,234,0.28));
     will-change: transform;
   }
-  @keyframes imgFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
   @keyframes imgReveal { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+
+  /* ─── Decorative stickers ─── */
+
+  /* Arrow: points from headline toward stat counters */
+  .hero-sticker-arrow {
+    position: absolute;
+    left: -12px;
+    bottom: -30px;
+    width: 80px;
+    height: 80px;
+    background-image: url();
+    background-size: 320px 320px;
+    background-position: -10px -10px;
+    background-repeat: no-repeat;
+    --sticker-rot: -8deg;
+    transform: rotate(-8deg);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.35));
+    pointer-events: none;
+    opacity: 0;
+    animation: stickerPopIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.4s both;
+    z-index: 3;
+  }
+
+  /* Starburst near CTA button */
+  .hero-sticker-star {
+    position: absolute;
+    right: -18px;
+    bottom: -22px;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    --sticker-rot: 12deg;
+    transform: rotate(12deg);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+    pointer-events: none;
+    opacity: 0;
+    animation: stickerPopIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.6s both, starburstPulse 2.5s ease-in-out 2.2s infinite;
+    z-index: 3;
+  }
+
+  /* Tape strip on mascot corner */
+  .hero-sticker-tape {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    width: 90px;
+    height: 32px;
+    object-fit: contain;
+    --sticker-rot: -6deg;
+    transform: rotate(-6deg);
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,.3));
+    pointer-events: none;
+    opacity: 0;
+    animation: stickerPopIn 0.5s cubic-bezier(0.22,1,0.36,1) 1.2s both;
+    z-index: 5;
+  }
 
   /* ─── Scroll indicator ─── */
   .scroll-indicator {
@@ -497,10 +545,9 @@ const homeStyles = `
     .h-im       { font-size: 1.5em; }
     .h-fullname { font-size: 2em; }
     .h-underline{ margin-bottom: 16px; }
-    .logo-ring-conic { width:280px; height:280px; }
-    .logo-ring-2 { display:none; }
-    .logo-glow { width:200px; height:200px; }
-    .hero-logo-img { max-height: 260px !important; }
+    .hero-mascot-img { max-height: 260px !important; }
+    .hero-mascot-glow { width:200px; height:200px; }
+    .hero-sticker-tape { display: none; }
     .h-stats { gap: 14px 22px; }
     .h-stat-num { font-size: 1.1em; }
     .soc-cards { gap: 12px; }
@@ -513,16 +560,9 @@ const homeStyles = `
 `;
 
 function Home() {
-  // Read visitor type from localStorage
-  const [visitorType, setVisitorType] = useState("default");
   const [showScroll, setShowScroll] = useState(true);
 
   useEffect(() => {
-    try {
-      const vt = localStorage.getItem("visitorType");
-      if (vt) setVisitorType(vt);
-    } catch(e) {}
-
     // Inject styles
     if (!document.getElementById("home-v7-styles")) {
       const tag = document.createElement("style");
@@ -541,7 +581,6 @@ function Home() {
     };
   }, []);
 
-  const greeting = GREETINGS[visitorType] || GREETINGS.default;
 
   return (
     <section>
@@ -556,8 +595,6 @@ function Home() {
           <Row className="align-items-center">
             {/* LEFT */}
             <Col md={7} className="hero-text-col">
-              {/* Dynamic greeting */}
-              <p className="h-greeting">{greeting}</p>
 
               {/* Name */}
               <div className="h-name-block">
@@ -589,23 +626,39 @@ function Home() {
                 </div>
               </div>
 
-              {/* CTA */}
-              <a href="/project" className="h-cta">
-                View My Work <span className="h-cta-arrow">→</span>
-              </a>
+              {/* CTA + stickers */}
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <a href="/project" className="h-cta">
+                  View My Work <span className="h-cta-arrow">→</span>
+                </a>
+                {/* Starburst near CTA */}
+                <img
+                  src={starburstImg}
+                  alt=""
+                  className="hero-sticker-star sticker-base"
+                  aria-hidden="true"
+                />
+              </div>
             </Col>
 
-            {/* RIGHT */}
+            {/* RIGHT — Bhonpu mascot */}
             <Col md={5} className="hero-img-col">
-              <div className="logo-ring-conic" />
-              <div className="logo-ring-2" />
-              <div className="logo-glow" />
-              <img
-                src={homeLogo}
-                alt="Siddhant Garg"
-                className="img-fluid hero-logo-img"
-                loading="lazy"
-              />
+              <div className="hero-mascot-wrap">
+                <div className="hero-mascot-glow" />
+                {/* Tape strip pinned to corner of mascot */}
+                <img
+                  src={tapeImg}
+                  alt=""
+                  className="hero-sticker-tape"
+                  aria-hidden="true"
+                />
+                <img
+                  src={bhonpuImg}
+                  alt="Bhonpu mascot"
+                  className="img-fluid hero-mascot-img"
+                  loading="lazy"
+                />
+              </div>
             </Col>
           </Row>
         </Container>

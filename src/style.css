@@ -1,4 +1,88 @@
+/* ─── Hand-lettered annotation font ─── */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
+
+/* ═══════════════════════════════════════
+   STICKER DESIGN SYSTEM UTILITIES
+   These classes are used across all sections
+   as the shared sticker/illustration layer.
+═══════════════════════════════════════ */
+
+/* Base sticker style — apply to every decorative illustration */
+.sticker-base {
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
+  will-change: transform;
+}
+
+/* Hand-lettered annotation font — ONLY for badges/callouts, NEVER body copy */
+.hand-marker {
+  font-family: 'Caveat', cursive !important;
+  font-weight: 700;
+}
+
+/* Sticker pop-in animation — used across sections */
+@keyframes stickerPopIn {
+  0%   { opacity: 0; transform: scale(0.5) rotate(var(--sticker-rot, -4deg)); }
+  70%  { transform: scale(1.08) rotate(var(--sticker-rot, -4deg)); }
+  100% { opacity: 1; transform: scale(1) rotate(var(--sticker-rot, -4deg)); }
+}
+
+/* Mascot idle float */
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Starburst idle pulse */
+@keyframes starburstPulse {
+  0%, 100% { transform: scale(1) rotate(var(--sticker-rot, 0deg)); }
+  50%       { transform: scale(1.04) rotate(var(--sticker-rot, 0deg)); }
+}
+
+/* Soundwave opacity pulse */
+@keyframes soundwavePulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* ─── Custom cursor (desktop/pointer devices only) ─── */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%239333ea' opacity='0.15'/%3E%3Ccircle cx='12' cy='12' r='4' fill='%239333ea' opacity='0.7'/%3E%3C/svg%3E") 12 12, auto;
+  }
+  a, button, [role='button'], .pg-card, .soc-card, .intro-card {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23ff007f' opacity='0.2'/%3E%3Ccircle cx='12' cy='12' r='5' fill='%23ff007f' opacity='0.8'/%3E%3C/svg%3E") 12 12, pointer;
+  }
+}
+
+/* ─── Reduced-motion overrides — always show final state instantly ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .sticker-base {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: rotate(var(--sticker-rot, 0deg)) !important;
+  }
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 html {
+
   /* ─── NEW PURPLE-LED PALETTE ─── */
   --accent-primary:   #9333ea;
   --accent-secondary: #00f3ff;

@@ -4,6 +4,8 @@ import Particle from "../Particle";
 import pdf from "../../Assets/../Assets/Siddhant_Garg_Resume.pdf";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Document, Page, pdfjs } from "react-pdf";
+import starburstImg from "../../Assets/stickers/collage-starburst.png";
+import flowersImg from "../../Assets/stickers/collage-flowers.png";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -264,6 +266,44 @@ const styles = `
     z-index: 1;
     animation: fadeUp 0.8s ease 0.15s both;
   }
+  /* ─── Resume sticker decorations ─── */
+  .resume-starburst {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 3;
+    transform: rotate(15deg);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+    animation: starburstPulse 2.5s ease-in-out infinite;
+    --sticker-rot: 15deg;
+  }
+  .resume-flowers {
+    position: relative;
+    display: inline-block;
+    margin-left: 12px;
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    pointer-events: none;
+    vertical-align: middle;
+    opacity: 0.7;
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,.3));
+    transform: rotate(-8deg);
+  }
+  .resume-signature {
+    margin-top: 32px;
+    font-size: 1.1em;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    letter-spacing: 0.3px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
 `;
 
 function ResumeNew() {
@@ -314,7 +354,14 @@ function ResumeNew() {
         </div>
 
         {/* PDF Viewer */}
-        <div className="resume-pdf-outer">
+        <div className="resume-pdf-outer" style={{ position: "relative" }}>
+          {/* Starburst peeking from behind PDF frame corner */}
+          <img
+            src={starburstImg}
+            alt=""
+            className="resume-starburst sticker-base"
+            aria-hidden="true"
+          />
           <div className="resume-status-bar">
             <span>
               <span className="status-dot" />
@@ -333,8 +380,8 @@ function ResumeNew() {
           </div>
         </div>
 
-        {/* Bottom Download Button */}
-        <div className="resume-btn-row">
+        {/* Bottom Download Button + decorations */}
+        <div className="resume-btn-row" style={{ alignItems: "center", gap: "12px" }}>
           <a
             href={pdf}
             target="_blank"
@@ -344,7 +391,19 @@ function ResumeNew() {
             <AiOutlineDownload />
             Download CV
           </a>
+          {/* Flowers — subtle accent near closing CTA */}
+          <img
+            src={flowersImg}
+            alt=""
+            className="resume-flowers"
+            aria-hidden="true"
+          />
         </div>
+
+        {/* Hand-lettered signature line */}
+        <p className="resume-signature hand-marker">
+          Built with AI tools + a lot of manual taste ✨
+        </p>
       </Container>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 
 const cardStyles = `
@@ -7,66 +7,56 @@ const cardStyles = `
   /* ── PROJECT CARD ── */
   .pg-card {
     position: relative;
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
     cursor: pointer;
     background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(0, 243, 255, 0.15);
-    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
-                box-shadow 0.4s ease,
-                border-color 0.4s ease;
-    animation: cardReveal 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    border: 1px solid rgba(160, 50, 210, 0.25);
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
     height: 100%;
-  }
-
-  .pg-card:nth-child(1){animation-delay:0.1s}
-  .pg-card:nth-child(2){animation-delay:0.25s}
-  .pg-card:nth-child(3){animation-delay:0.4s}
-
-  @keyframes cardReveal {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
+    display: flex;
+    flex-direction: column;
   }
 
   .pg-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(0, 243, 255, 0.5);
+    transform: translateY(-8px);
+    border-color: rgba(0, 243, 255, 0.55);
     box-shadow:
-      0 20px 60px rgba(0, 243, 255, 0.15),
-      0 8px 20px rgba(0,0,0,0.4),
-      inset 0 0 30px rgba(0, 243, 255, 0.03);
+      0 20px 50px rgba(160, 40, 220, 0.25),
+      0 6px 20px rgba(0,0,0,0.5);
   }
 
-  /* Image container */
   .pg-card-img-wrap {
     position: relative;
     overflow: hidden;
-    height: 200px;
+    height: 190px;
+    width: 100%;
   }
 
   .pg-card-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
-    filter: brightness(0.85) saturate(1.1);
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
+    filter: brightness(0.9) saturate(1.05);
   }
   .pg-card:hover .pg-card-img-wrap img {
-    transform: scale(1.08);
-    filter: brightness(0.6);
+    transform: scale(1.06);
+    filter: brightness(0.65);
   }
 
-  /* Overlay on hover */
   .pg-img-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       135deg,
-      rgba(0, 243, 255, 0.25) 0%,
-      rgba(10,10,30,0.6) 100%
+      rgba(147, 51, 234, 0.35) 0%,
+      rgba(5,0,15,0.7) 100%
     );
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.35s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,208 +65,210 @@ const cardStyles = `
 
   .pg-overlay-text {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.85em;
-    font-weight: 600;
+    font-size: 0.82em;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.5);
-    padding: 8px 20px;
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 7px 18px;
     border-radius: 30px;
-    backdrop-filter: blur(4px);
-    transform: translateY(8px);
-    transition: transform 0.35s ease;
-  }
-  .pg-card:hover .pg-overlay-text { transform: translateY(0); }
-
-  /* Bottom gradient fade */
-  .pg-card-img-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 60px;
-    background: linear-gradient(transparent, rgba(10,10,25,0.95));
-    pointer-events: none;
+    backdrop-filter: blur(6px);
   }
 
-  /* Number badge */
   .pg-badge {
     position: absolute;
-    top: 14px; left: 14px;
-    font-family: 'Outfit', monospace;
+    top: 12px; left: 12px;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.68em;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #ff007f;
-    background: rgba(255, 0, 127, 0.12);
-    border: 1px solid rgba(255, 0, 127, 0.3);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #00f3ff;
+    background: rgba(5, 0, 18, 0.85);
+    border: 1px solid rgba(0, 243, 255, 0.4);
     padding: 3px 10px;
     border-radius: 20px;
     z-index: 2;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
   }
 
-  /* Card body */
   .pg-card-body {
-    padding: 20px 22px 24px;
-    position: relative;
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
-
-  /* Shimmer line */
-  .pg-card-body::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 20%; right: 20%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.5), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .pg-card:hover .pg-card-body::before { opacity: 1; }
 
   .pg-card-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 1.18em;
+    font-size: 1.15em;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 10px;
-    text-align: center;
+    margin-bottom: 8px;
   }
 
   .pg-card-desc {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.88em;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.62);
-    text-align: center;
-    margin: 0;
-    transition: color 0.3s ease;
+    font-size: 0.86em;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 14px;
+    flex: 1;
   }
-  .pg-card:hover .pg-card-desc { color: rgba(255,255,255,0.82); }
 
-  /* Tags row */
   .pg-tags {
     display: flex;
-    justify-content: center;
     gap: 6px;
-    margin-top: 14px;
     flex-wrap: wrap;
+    margin-top: auto;
   }
   .pg-tag {
     font-family: 'Outfit', sans-serif;
     font-size: 0.65em;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.5px;
-    color: #00f3ff;
-    background: rgba(0, 243, 255, 0.1);
-    border: 1px solid rgba(0, 243, 255, 0.25);
-    padding: 2px 10px;
-    border-radius: 20px;
+    color: #c084fc;
+    background: rgba(147, 51, 234, 0.15);
+    border: 1px solid rgba(147, 51, 234, 0.35);
+    padding: 2px 9px;
+    border-radius: 12px;
     text-transform: uppercase;
-    transition: all 0.3s ease;
-  }
-  .pg-card:hover .pg-tag {
-    background: rgba(0, 243, 255, 0.18);
-    border-color: rgba(0, 243, 255, 0.45);
   }
 
-  /* ── MODAL ── */
+  /* ── MODAL TOP LAYER ── */
+  .pg-modal {
+    z-index: 999999 !important;
+  }
+  .modal-backdrop {
+    z-index: 999998 !important;
+    background-color: rgba(3, 0, 10, 0.88) !important;
+    backdrop-filter: blur(14px) !important;
+  }
+  .pg-modal .modal-dialog {
+    max-width: 820px;
+    margin: 1.25rem auto 5rem auto;
+  }
+  @media (max-width: 767px) {
+    .pg-modal .modal-dialog {
+      margin: 10px auto 70px auto;
+      max-width: 95vw;
+    }
+  }
+
   .pg-modal .modal-content {
-    background: #070714 !important;
-    border: 1px solid rgba(0, 243, 255, 0.25) !important;
+    background: #080214 !important;
+    border: 1px solid rgba(160, 50, 210, 0.45) !important;
     border-radius: 20px !important;
-    box-shadow: 0 30px 80px rgba(0, 243, 255, 0.15), 0 0 0 1px rgba(0, 243, 255, 0.1) !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 45px rgba(147, 51, 234, 0.3) !important;
     overflow: hidden;
   }
-
   .pg-modal .modal-header {
-    background: linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(255, 0, 127, 0.03));
-    border-bottom: 1px solid rgba(0, 243, 255, 0.15) !important;
-    padding: 22px 28px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-
+  .pg-modal-back-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85em;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.3), rgba(147, 51, 234, 0.4));
+    border: 1px solid rgba(0, 243, 255, 0.6);
+    padding: 7px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 16px rgba(0, 243, 255, 0.25);
+  }
+  .pg-modal-back-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.5), rgba(147, 51, 234, 0.6));
+    color: #fff;
+  }
   .pg-modal .modal-title {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 1.4em !important;
-    font-weight: 700 !important;
+    font-size: 1.35em !important;
+    font-weight: 800 !important;
     color: #fff !important;
-    letter-spacing: -0.3px;
+    margin: 0;
   }
-
-  .pg-modal .modal-header .btn-close {
-    filter: invert(1) !important;
-    opacity: 0.6 !important;
-    transition: opacity 0.2s ease !important;
-  }
-  .pg-modal .modal-header .btn-close:hover { opacity: 1 !important; }
-
   .pg-modal .modal-body {
-    padding: 28px 32px !important;
-    color: rgba(255,255,255,0.8) !important;
+    padding: 24px 30px !important;
+    color: rgba(255,255,255,0.85) !important;
     font-family: 'Outfit', sans-serif !important;
-    line-height: 1.75 !important;
+    max-height: 72vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
-
   .pg-modal .modal-body h5 {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.8em !important;
+    color: #00f3ff !important;
+    font-size: 0.82em !important;
     font-weight: 700 !important;
-    letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #ff007f !important;
-    margin-top: 22px !important;
+    letter-spacing: 1.8px !important;
+    margin-top: 20px !important;
     margin-bottom: 8px !important;
     display: flex;
     align-items: center;
     gap: 8px;
   }
-
   .pg-modal .modal-body h5::before {
     content: '';
     display: inline-block;
-    width: 16px; height: 1px;
-    background: #ff007f;
-    box-shadow: 0 0 6px rgba(255, 0, 127, 0.6);
+    width: 12px; height: 2px;
+    background: #00f3ff;
+    border-radius: 2px;
   }
-
   .pg-modal .modal-body p {
-    font-size: 0.93em !important;
-    color: rgba(255,255,255,0.72) !important;
-    margin-bottom: 4px !important;
+    font-size: 0.94em !important;
+    color: rgba(255,255,255,0.78) !important;
+    line-height: 1.7 !important;
+    margin-bottom: 12px !important;
   }
-
   .pg-modal .modal-footer {
-    border-top: 1px solid rgba(0, 243, 255, 0.15) !important;
-    padding: 16px 28px !important;
-    background: rgba(0, 243, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 14px 24px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
   }
-
+  .pg-close-btn {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.85em !important;
+    padding: 9px 22px !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    color: rgba(255,255,255,0.85) !important;
+    cursor: pointer;
+    transition: all 0.2s ease !important;
+  }
+  .pg-close-btn:hover {
+    background: rgba(255,255,255,0.2) !important;
+    color: #fff !important;
+  }
   .pg-demo-btn {
     font-family: 'Outfit', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 0.9em !important;
-    letter-spacing: 0.5px !important;
-    padding: 9px 26px !important;
-    border-radius: 30px !important;
-    background: linear-gradient(135deg, #ff007f, #ff0055) !important;
+    font-weight: 700 !important;
+    font-size: 0.88em !important;
+    padding: 9px 24px !important;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #9333ea, #7c3aed) !important;
     border: none !important;
     color: #fff !important;
-    box-shadow: 0 4px 20px rgba(255, 0, 127, 0.35) !important;
-    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 18px rgba(147, 51, 234, 0.45) !important;
+    transition: all 0.2s ease !important;
   }
   .pg-demo-btn:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 28px rgba(255, 0, 127, 0.5) !important;
-  }
-
-  .pg-modal-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(0, 243, 255, 0.2);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 26px rgba(147, 51, 234, 0.65) !important;
+    color: #fff !important;
   }
 `;
 
@@ -291,6 +283,22 @@ function ProjectCard({
 }) {
   const [show, setShow] = useState(false);
 
+  const handleClose = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setShow(false);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setShow(false);
+    };
+    if (show) window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [show]);
+
   return (
     <>
       <style>{cardStyles}</style>
@@ -298,52 +306,91 @@ function ProjectCard({
       <div className="pg-card" onClick={() => setShow(true)}>
         <div className="pg-card-img-wrap">
           {badge && <span className="pg-badge">{badge}</span>}
-          <img src={imgPath} alt={title} />
+          <img src={imgPath} alt={title} loading="lazy" />
           <div className="pg-img-overlay">
-            <span className="pg-overlay-text">View Details</span>
+            <span className="pg-overlay-text">View Case Study</span>
           </div>
         </div>
+
         <div className="pg-card-body">
-          <div className="pg-card-title">{title}</div>
+          <h3 className="pg-card-title">{title}</h3>
           <p className="pg-card-desc">{shortDescription}</p>
-          {tags && (
+
+          {tags && tags.length > 0 && (
             <div className="pg-tags">
-              {tags.map((t, i) => (
-                <span key={i} className="pg-tag">
-                  {t}
-                </span>
+              {tags.map((t, idx) => (
+                <span key={idx} className="pg-tag">{t}</span>
               ))}
             </div>
           )}
         </div>
       </div>
 
+      {/* Modal Lightbox */}
       <Modal
         show={show}
-        onHide={() => setShow(false)}
+        onHide={handleClose}
         centered
         size="lg"
         className="pg-modal"
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
+          <button
+            className="pg-modal-back-btn"
+            onClick={handleClose}
+            onPointerDown={handleClose}
+          >
+            ← Back to Projects
+          </button>
         </Modal.Header>
+
         <Modal.Body>
-          <img src={imgPath} alt={title} className="pg-modal-img" />
-          {fullDescription}
+          <img
+            src={imgPath}
+            alt={title}
+            style={{
+              width: "100%",
+              maxHeight: "240px",
+              objectFit: "cover",
+              borderRadius: "14px",
+              marginBottom: "20px",
+              border: "1px solid rgba(160, 50, 210, 0.35)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+            }}
+          />
+
+          <div>
+            <h5>Overview</h5>
+            <p>{shortDescription}</p>
+          </div>
+
+          {fullDescription && (
+            <div style={{ marginTop: "16px" }}>
+              {fullDescription}
+            </div>
+          )}
         </Modal.Body>
-        {demoLink && (
-          <Modal.Footer>
+
+        <Modal.Footer>
+          <button
+            className="pg-close-btn"
+            onClick={handleClose}
+            onPointerDown={handleClose}
+          >
+            Close Preview
+          </button>
+          {demoLink && (
             <a
               href={demoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn pg-demo-btn"
+              className="pg-demo-btn"
             >
-              🔗 Live Demo
+              Launch Live Project ↗
             </a>
-          </Modal.Footer>
-        )}
+          )}
+        </Modal.Footer>
       </Modal>
     </>
   );

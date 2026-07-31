@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
 
 import HTML from "../../Assets/TechIcons/HTML.svg";
 import CSS from "../../Assets/TechIcons/CSS.svg";
@@ -15,105 +14,76 @@ import Supabase from "../../Assets/TechIcons/Supabase.svg";
 const techStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 
+  .sg-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
   .sg-icon-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 20px 14px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(198,120,221,0.14);
+    gap: 8px;
+    padding: 14px 8px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(160,50,210,0.2);
     cursor: default;
-    transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-    position: relative;
-    overflow: hidden;
-    animation: iconCardIn 0.6s cubic-bezier(0.22,1,0.36,1) both;
+    transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
   }
-
-  .sg-icon-card:nth-child(1){animation-delay:0.05s}
-  .sg-icon-card:nth-child(2){animation-delay:0.10s}
-  .sg-icon-card:nth-child(3){animation-delay:0.15s}
-  .sg-icon-card:nth-child(4){animation-delay:0.20s}
-  .sg-icon-card:nth-child(5){animation-delay:0.25s}
-  .sg-icon-card:nth-child(6){animation-delay:0.30s}
-  .sg-icon-card:nth-child(7){animation-delay:0.35s}
-  .sg-icon-card:nth-child(8){animation-delay:0.40s}
-  .sg-icon-card:nth-child(9){animation-delay:0.45s}
-  .sg-icon-card:nth-child(10){animation-delay:0.50s}
-
-  @keyframes iconCardIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.92); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .sg-icon-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(198,120,221,0.07), transparent);
-    transition: left 0.5s ease;
-    pointer-events: none;
-  }
-  .sg-icon-card:hover::after { left: 160%; }
-
-  .sg-icon-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 20%; right: 20%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(198,120,221,0.7), transparent);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-  }
-  .sg-icon-card:hover::before { opacity: 1; }
 
   .sg-icon-card:hover {
-    background: rgba(198,120,221,0.08);
-    border-color: rgba(198,120,221,0.42);
-    transform: translateY(-7px) scale(1.04);
-    box-shadow:
-      0 14px 40px rgba(198,120,221,0.14),
-      0 4px 12px rgba(0,0,0,0.3);
+    background: rgba(160,50,210,0.12);
+    border-color: rgba(0,243,255,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(160,50,210,0.25);
   }
 
   .sg-icon-img {
-    width: 44px;
-    height: 44px;
-    object-fit: contain;
-    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), filter 0.3s ease;
-    filter: drop-shadow(0 0 0px rgba(198,120,221,0));
+    width: 40px !important;
+    height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    object-fit: contain !important;
+    display: block !important;
+    transition: transform 0.3s ease;
   }
   .sg-icon-card:hover .sg-icon-img {
-    transform: scale(1.18) rotate(-4deg);
-    filter: drop-shadow(0 0 8px rgba(198,120,221,0.5));
+    transform: scale(1.1);
   }
 
   .sg-icon-label {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.78em;
+    font-size: 0.72em;
     font-weight: 600;
-    color: rgba(255,255,255,0.65);
-    letter-spacing: 0.3px;
-    transition: color 0.3s ease;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.2px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
   .sg-icon-card:hover .sg-icon-label {
-    color: #c678dd;
+    color: #c084fc;
   }
 `;
 
 const techs = [
-  { src: HTML, label: "HTML" },
-  { src: CSS, label: "CSS" },
+  { src: HTML, label: "HTML5" },
+  { src: CSS, label: "CSS3" },
   { src: Javascript, label: "JavaScript" },
-  { src: Python, label: "Python" },
   { src: ReactIcon, label: "React" },
   { src: NodeJs, label: "Node.js" },
   { src: Mongo, label: "MongoDB" },
   { src: Firebase, label: "Firebase" },
+  { src: Python, label: "Python" },
   { src: Shopify, label: "Shopify" },
   { src: Supabase, label: "Supabase" },
 ];
@@ -126,30 +96,17 @@ function Techstack() {
       tag.innerHTML = techStyles;
       document.head.appendChild(tag);
     }
-    return () => {
-      const el = document.getElementById("sg-tech-styles");
-      if (el) el.remove();
-    };
   }, []);
 
   return (
-    <Row
-      style={{
-        justifyContent: "center",
-        paddingBottom: "50px",
-        gap: "14px",
-        margin: "0 10px",
-      }}
-    >
+    <div className="sg-tech-grid">
       {techs.map((t, i) => (
-        <Col key={i} xs={4} md={1} style={{ padding: "0" }}>
-          <div className="sg-icon-card">
-            <img src={t.src} alt={t.label} className="sg-icon-img" />
-            <div className="sg-icon-label">{t.label}</div>
-          </div>
-        </Col>
+        <div key={i} className="sg-icon-card">
+          <img src={t.src} alt={t.label} className="sg-icon-img" />
+          <span className="sg-icon-label">{t.label}</span>
+        </div>
       ))}
-    </Row>
+    </div>
   );
 }
 

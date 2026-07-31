@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import myImg from "../../Assets/avatar.png";
-import Tilt from "react-parallax-tilt";
+import portraitImg from "../../Assets/profile/siddhant-doodle-portrait.png";
+import tapeImg from "../../Assets/stickers/collage-tape.png";
 
 const styles = `
   /* ════════════════════════════
@@ -243,7 +243,7 @@ const styles = `
   }
 
   /* ════════════════════════════
-     AVATAR
+     AVATAR — Sticker Portrait
   ════════════════════════════ */
   .myAvtar {
     display: flex;
@@ -260,52 +260,61 @@ const styles = `
     justify-content: center;
   }
 
-  .av-glow {
-    position:absolute; inset:-48px; border-radius:50%;
-    background:radial-gradient(circle, rgba(147,51,234,0.2) 0%, transparent 65%);
-    filter:blur(16px);
-    animation:avGl 4s ease-in-out infinite; pointer-events:none;
-  }
-  @keyframes avGl{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:0.9;transform:scale(1.08)}}
-
-  /* Spinning conic rings — purple → cyan → pink */
-  .av-ring { position:absolute; border-radius:50%; pointer-events:none; }
-  .av-ring-1 {
-    inset:-14px;
-    background:conic-gradient(#7c3aed 0deg,rgba(124,58,237,0.04) 90deg,#00f3ff 180deg,rgba(0,243,255,0.04) 270deg,#ff007f 300deg,rgba(124,58,237,0.04) 330deg,#7c3aed 360deg);
-    animation:avSpin 8s linear infinite;
-    -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),black calc(100% - 2px));
-    mask:radial-gradient(farthest-side,transparent calc(100% - 2px),black calc(100% - 2px));
-    will-change: transform;
-  }
-  .av-ring-2 {
-    inset:-28px;
-    border:1px solid rgba(147,51,234,0.25);
-    animation:avSpin 13s linear infinite reverse;
-  }
-  .av-ring-3 {
-    inset:-46px;
-    background:conic-gradient(rgba(147,51,234,0.09) 0deg,transparent 70deg,rgba(0,243,255,0.11) 180deg,transparent 260deg,rgba(147,51,234,0.09) 360deg);
-    animation:avSpin 22s linear infinite;
-    -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1px),black calc(100% - 1px));
-    mask:radial-gradient(farthest-side,transparent calc(100% - 1px),black calc(100% - 1px));
-  }
-  @keyframes avSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-  /* Photo */
+  /* Sticker-style portrait: rotated, drop-shadow, no circular crop */
   .avatar-photo {
-    border-radius:50%;
-    border:3px solid rgba(147,51,234,0.4) !important;
-    box-shadow:0 0 26px rgba(147,51,234,0.18),0 0 50px rgba(147,51,234,0.08);
-    position:relative; z-index:2;
-    display:block !important;
-    max-width:270px; width:100%;
-    transition:box-shadow 0.4s;
-    animation:avReveal 1s cubic-bezier(0.22,1,0.36,1) 0.4s both;
+    border-radius: 12px;
+    border: none !important;
+    box-shadow: none;
+    position: relative; z-index: 2;
+    display: block !important;
+    max-width: 260px; width: 100%;
+    transform: rotate(-4deg);
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 20px rgba(147,51,234,0.15));
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), filter 0.4s;
+    animation: portraitReveal 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s both;
   }
-  @keyframes avReveal{from{opacity:0;transform:scale(0.87) rotate(-3deg)}to{opacity:1;transform:scale(1) rotate(0)}}
   .avatar-outer:hover .avatar-photo {
-    box-shadow:0 0 40px rgba(147,51,234,0.35),0 0 72px rgba(147,51,234,0.15);
+    transform: rotate(-1deg) translateY(-6px);
+    filter: drop-shadow(0 18px 36px rgba(0,0,0,0.6)) drop-shadow(0 0 30px rgba(147,51,234,0.25));
+  }
+  @keyframes portraitReveal { from{opacity:0;transform:rotate(-8deg) scale(0.9)} to{opacity:1;transform:rotate(-4deg) scale(1)} }
+
+  /* Tape strip pinned across portrait top corner */
+  .avatar-tape {
+    position: absolute;
+    top: -14px;
+    left: 10px;
+    width: 96px;
+    height: 34px;
+    object-fit: contain;
+    transform: rotate(-5deg);
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,.3));
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    animation: stickerPopIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.7s both;
+    --sticker-rot: -5deg;
+  }
+
+  /* AI Architect annotation badge */
+  .ai-badge {
+    position: absolute;
+    top: -18px;
+    right: -20px;
+    background: rgba(147, 51, 234, 0.12);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: #c084fc;
+    font-size: 1em;
+    white-space: nowrap;
+    transform: rotate(4deg);
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+    animation: stickerPopIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.8s both;
+    --sticker-rot: 4deg;
+    backdrop-filter: blur(4px);
   }
 
   /* Nametag */
@@ -359,7 +368,8 @@ const styles = `
     .ha-text-col  { order: 2 !important; }
     .ha-avatar-col{ order: 1 !important; padding-bottom: 36px; padding-top: 0; }
     .avatar-photo { max-width: 200px; }
-    .av-ring-3 { display:none; }
+    .avatar-tape  { width: 72px; top: -10px; left: 6px; }
+    .ai-badge     { display: none; }
     .cards-timeline { padding-left: 13px; gap: 9px; }
     .intro-card { padding: 12px 13px 12px 14px; gap: 10px; }
     .intro-card::before { left:-18px; }
@@ -432,26 +442,21 @@ function Home2() {
         <Row className="align-items-center">
           {/* AVATAR */}
           <Col md={4} className="myAvtar ha-avatar-col">
-            <Tilt
-              glareEnable={true}
-              glareMaxOpacity={0.07}
-              glareColor="#9333ea"
-              tiltMaxAngleX={9}
-              tiltMaxAngleY={9}
-            >
-              <div className="avatar-outer">
-                <div className="av-glow" />
-                <div className="av-ring av-ring-1" />
-                <div className="av-ring av-ring-2" />
-                <div className="av-ring av-ring-3" />
-                <img
-                  src={myImg}
-                  className="img-fluid avatar-photo"
-                  alt="Siddhant Garg"
-                  loading="lazy"
-                />
-              </div>
-            </Tilt>
+            <div className="avatar-outer">
+              {/* Tape strip pinned to portrait corner */}
+              <img
+                src={tapeImg}
+                alt=""
+                className="avatar-tape"
+                aria-hidden="true"
+              />
+              <img
+                src={portraitImg}
+                className="img-fluid avatar-photo"
+                alt="Siddhant Garg"
+                loading="lazy"
+              />
+            </div>
             <div className="av-nametag">
               <span className="av-name">Siddhant Garg</span>
               <span className="av-role">Growth Strategist</span>
@@ -479,12 +484,16 @@ function Home2() {
 
             <div className="cards-timeline" ref={containerRef}>
               {CARDS.map((card, i) => (
-                <div className="intro-card" key={i}>
-                  <span className={`card-symbol ${card.symClass}`}>{card.sym}</span>
-                  <div className="card-icon">{card.icon}</div>
-                  <p className="card-body-text">{card.content}</p>
-                </div>
-              ))}
+              <div className="intro-card" key={i} style={{ position: "relative" }}>
+                <span className={`card-symbol ${card.symClass}`}>{card.sym}</span>
+                <div className="card-icon">{card.icon}</div>
+                <p className="card-body-text">{card.content}</p>
+                {/* AI Architect badge on the AI row */}
+                {i === 3 && (
+                  <span className="ai-badge hand-marker">🤖 AI Architect</span>
+                )}
+              </div>
+            ))}
             </div>
           </Col>
         </Row>

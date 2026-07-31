@@ -11,6 +11,15 @@ function Footer() {
       <Row>
         <Col md="4" className="footer-copywright">
           <h3><h3>Designed and Strategically Built by SG</h3></h3>
+          <p className="hand-marker" style={{
+            fontSize: "0.95em",
+            color: "rgba(255,255,255,0.3)",
+            margin: "4px 0 0",
+            fontWeight: 600,
+            letterSpacing: "0.2px"
+          }}>
+            Built with AI tools + a lot of manual taste ✦
+          </p>
         </Col>
         <Col md="4" className="footer-copywright">
           <h3>Copyright © {year} Siddhant Garg</h3>

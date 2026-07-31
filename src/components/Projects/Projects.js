@@ -521,6 +521,7 @@ function Projects() {
                 badge="NEW · AI · React"
                 title="Pathfinder"
                 tags={["AI", "React", "Firebase"]}
+                tagRotation={-2}
                 shortDescription="I built a psychometric career discovery platform for Class 10 students, creating a 35 question quiz that maps personality traits to 20 distinct career paths with localized Indian roadmaps."
                 demoLink="https://www.sidpathfinder.online/"
                 fullDescription={
@@ -568,6 +569,7 @@ function Projects() {
                 badge="NEW · Product · React"
                 title="CoachFinder"
                 tags={["React", "Firebase", "EdTech"]}
+                tagRotation={3}
                 shortDescription="I engineered a recommendation engine that helps students identify the ideal coaching institute for JEE, NEET, UPSC, and CA based on 7 weighted dimensions."
                 demoLink="https://coachfinder-xi.vercel.app/"
                 fullDescription={
@@ -615,6 +617,7 @@ function Projects() {
                 badge="NEW · Full Stack"
                 title="CollabX"
                 tags={["React", "Node.js", "MongoDB"]}
+                tagRotation={-3}
                 shortDescription="I built a full stack matchmaking platform for creators and brands featuring a bidirectional swipe-to-match system that only reveals contact details on mutual interest."
                 demoLink="https://collabx-mauve.vercel.app/"
                 fullDescription={
@@ -876,6 +879,7 @@ function Projects() {
                 badge="01 · Founder"
                 title="OURi.OUT"
                 tags={["Branding", "Growth", "Strategy"]}
+                tagRotation={2}
                 shortDescription="I founded OURi.OUT to build identity-driven branding that earns trust and captures long-term attention in a fast-swiping digital culture."
                 demoLink="https://www.ouriout.com"
                 fullDescription={
@@ -921,6 +925,7 @@ function Projects() {
                 badge="02 · Product"
                 title="Arogyam"
                 tags={["AI", "Healthcare", "React"]}
+                tagRotation={-1}
                 shortDescription="I engineered an AI enabled healthcare platform that simplifies early symptom understanding through conversational support."
                 fullDescription={
                   <>
@@ -965,6 +970,7 @@ function Projects() {
                 badge="03 · Analytics"
                 title="Vendor Performance Analysis"
                 tags={["Data", "Analytics", "Business"]}
+                tagRotation={3}
                 shortDescription="I developed a business analytics project that improves vendor evaluation through structured, data driven performance insights."
                 fullDescription={
                   <>

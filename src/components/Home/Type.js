@@ -6,19 +6,20 @@ function Type() {
     <Typewriter
       options={{
         strings: [
-          "Growth Strategist",
-          "Campaign Architect",
-          "D2C Brand Builder",
-          "Founder at Heart",
-          "The Guy Who Ships",
+          "Growth Strategist.",
+          "AI-Orchestration Architect.",
+          "Product Builder.",
+          "Campaign Engineer.",
+          "The Guy Who Ships.",
         ],
         autoStart: true,
         loop: true,
-        deleteSpeed: 35,
-        delay: 55,
+        deleteSpeed: 40,
+        delay: 60,
       }}
     />
   );
 }
 
 export default Type;
+
