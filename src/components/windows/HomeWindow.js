@@ -1,374 +1,602 @@
-import React, { useEffect } from "react";
-import Typewriter from "typewriter-effect";
+import React, { useEffect, useState } from "react";
 import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 import avatarImg from "../../Assets/avatar.png";
 
+/* ── Roles that cycle in the tag strip ───────────────── */
+const ROLES = [
+  { label: "Growth Strategist", color: "#c084fc" },
+  { label: "AI-Orchestration Architect", color: "#00f3ff" },
+  { label: "Product Builder", color: "#f0abfc" },
+  { label: "Campaign Engineer", color: "#818cf8" },
+  { label: "The Guy Who Ships", color: "#34d399" },
+];
+
 const styles = `
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+  /* ── Root ─────────────────────────────────────────── */
   .hw-root {
-    padding: 36px 44px 48px;
+    padding: 0;
     background: transparent;
     position: relative;
-    min-height: 100%;
-  }
-
-  .hw-grid {
-    display: grid;
-    grid-template-columns: 1fr 310px;
-    gap: 40px;
-    align-items: center;
     width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .hw-left-col {
+  /* ── Two-panel layout ─────────────────────────────── */
+  .hw-shell {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+  }
+
+  /* ── Left panel ─────────────────────────────────── */
+  .hw-left {
+    padding: 38px 40px 38px 44px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 0;
+    position: relative;
+    z-index: 2;
   }
 
-  /* Greeting */
-  .hw-im {
-    font-family: 'Outfit','Inter',sans-serif;
-    font-size: clamp(0.8em, 1.8vw, 0.9em);
-    font-weight: 600;
-    color: rgba(255,255,255,0.48);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin: 0 0 4px;
-    animation: hwUp 0.6s ease 0.1s both;
+  /* ── Right panel - floating avatar ──────────────── */
+  .hw-right {
+    width: 260px;
+    padding: 32px 28px 32px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
   }
+
+  /* ══════════════════════════════════════════════════
+     GREETING LINE
+  ══════════════════════════════════════════════════ */
+  .hw-greeting {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 8px 0;
+    animation: hwFade 0.5s ease 0.1s both;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hw-greeting::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    background: linear-gradient(90deg, #9333ea, #00f3ff);
+    border-radius: 2px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     NAME
+  ══════════════════════════════════════════════════ */
   .hw-name {
-    font-family: 'Syne','Outfit',sans-serif;
-    font-size: clamp(2.4em, 4.5vw, 3.5em);
-    font-weight: 800;
-    line-height: 1.05;
-    margin: 0 0 4px;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #ffffff 0%, #c084fc 55%, #00f3ff 100%);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.6em, 5vw, 3.6em);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin: 0 0 18px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #e4d4fd 40%, #c084fc 70%, #00f3ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: hwUp 0.6s ease 0.2s both;
-  }
-  .hw-type {
-    font-family: 'Outfit','Inter',sans-serif;
-    font-size: clamp(1.05em, 2.2vw, 1.28em);
-    font-weight: 600;
-    color: #00f3ff;
-    min-height: 56px;
-    line-height: 1.4;
-    margin: 10px 0 20px;
-    display: block;
-    animation: hwUp 0.6s ease 0.35s both;
+    animation: hwFade 0.5s ease 0.2s both;
   }
 
-  /* Bio */
+  /* ══════════════════════════════════════════════════
+     ROLE TAG CAROUSEL (no typewriter, no overlap)
+  ══════════════════════════════════════════════════ */
+  .hw-role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 22px 0;
+    animation: hwFade 0.5s ease 0.3s both;
+    min-height: 38px;
+  }
+  .hw-role-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.4s ease;
+    box-shadow: 0 0 10px currentColor;
+  }
+  .hw-role-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1em, 2.2vw, 1.25em);
+    font-weight: 700;
+    transition: all 0.4s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* ══════════════════════════════════════════════════
+     BIO
+  ══════════════════════════════════════════════════ */
   .hw-bio {
-    font-family: 'Outfit','Inter',sans-serif;
-    font-size: clamp(0.88em, 1.8vw, 0.96em);
-    color: rgba(255,255,255,0.68);
-    line-height: 1.7;
-    max-width: 520px;
-    margin: 0 0 28px;
-    animation: hwUp 0.6s ease 0.45s both;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.84em, 1.8vw, 0.94em);
+    color: rgba(255,255,255,0.62);
+    line-height: 1.75;
+    margin: 0 0 28px 0;
+    max-width: 460px;
+    animation: hwFade 0.5s ease 0.4s both;
+    border-left: 2px solid rgba(147, 51, 234, 0.5);
+    padding-left: 14px;
+  }
+  .hw-bio strong {
+    color: #c084fc;
+    font-weight: 700;
   }
 
-  /* Stats row */
+  /* ══════════════════════════════════════════════════
+     STATS GRID
+  ══════════════════════════════════════════════════ */
   .hw-stats {
-    display: flex;
-    gap: 26px;
-    flex-wrap: wrap;
-    margin: 0 0 32px;
-    animation: hwUp 0.6s ease 0.55s both;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 0;
+    width: fit-content;
+    margin: 0 0 28px 0;
+    animation: hwFade 0.5s ease 0.5s both;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
   }
   .hw-stat {
+    padding: 14px 20px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    gap: 3px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.3s ease;
   }
+  .hw-stat:last-child { border-right: none; }
+  .hw-stat:hover { background: rgba(147,51,234,0.08); }
   .hw-stat-num {
-    font-family: 'Syne','Outfit',sans-serif;
-    font-size: 1.55em;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.1;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5em;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #c084fc, #00f3ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .hw-stat-num span { color: #c084fc; }
   .hw-stat-lbl {
-    font-family: 'Outfit',sans-serif;
-    font-size: 0.68em;
-    color: rgba(255,255,255,0.42);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.56em;
+    font-weight: 700;
+    color: rgba(255,255,255,0.35);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+    text-align: center;
+    white-space: nowrap;
   }
 
-  /* CTA row */
-  .hw-cta-row {
+  /* ══════════════════════════════════════════════════
+     CTA BUTTONS
+  ══════════════════════════════════════════════════ */
+  .hw-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     flex-wrap: wrap;
-    animation: hwUp 0.6s ease 0.65s both;
+    animation: hwFade 0.5s ease 0.6s both;
+    margin: 0 0 28px 0;
   }
-  .hw-cta-primary {
+  .hw-btn-primary {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 11px 26px;
-    background: linear-gradient(135deg, #9333ea, #7c3aed);
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
     color: #fff;
     border-radius: 12px;
-    font-family: 'Outfit',sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.88em;
     font-weight: 700;
-    letter-spacing: 0.3px;
     text-decoration: none;
     border: none;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(147,51,234,0.4);
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 4px 18px rgba(124,58,237,0.45);
+    white-space: nowrap;
   }
-  .hw-cta-primary:hover {
+  .hw-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(147,51,234,0.55);
+    box-shadow: 0 8px 28px rgba(124,58,237,0.6);
     color: #fff;
     text-decoration: none;
   }
-
-  .hw-soc-icon {
+  .hw-btn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px; height: 44px;
-    border-radius: 12px;
     background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.14);
-    color: rgba(255,255,255,0.8);
-    font-size: 1.15em;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.75);
+    font-size: 1.1em;
     text-decoration: none;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s, color 0.2s;
-    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .hw-soc-icon:hover {
-    background: rgba(0,243,255,0.18);
-    border-color: rgba(0,243,255,0.5);
+  .hw-btn-icon:hover {
+    background: rgba(0,243,255,0.15);
+    border-color: rgba(0,243,255,0.45);
     color: #00f3ff;
     transform: translateY(-3px);
     text-decoration: none;
   }
 
-  /* ════════════════════════════
-     HIGH-TECH ROTATING CYBER AVATAR (NO PILLS)
-  ════════════════════════════ */
-  .hw-right-col {
+  /* ══════════════════════════════════════════════════
+     TAGLINE
+  ══════════════════════════════════════════════════ */
+  .hw-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76em;
+    color: rgba(255,255,255,0.32);
+    letter-spacing: 0.5px;
+    animation: hwFade 0.5s ease 0.7s both;
+    margin: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
-    animation: hwUp 0.6s ease 0.3s both;
+    gap: 6px;
+  }
+  .hw-tagline::before {
+    content: '●';
+    color: #28c840;
+    font-size: 0.7em;
+    animation: tagPulse 2.5s ease infinite;
+  }
+  @keyframes tagPulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.3; }
   }
 
-  .hw-avatar-frame {
+  /* ══════════════════════════════════════════════════
+     FLOATING CYBER AVATAR
+  ══════════════════════════════════════════════════ */
+  .hw-avatar-wrap {
     position: relative;
-    width: 270px;
-    height: 270px;
-    border-radius: 50%;
-    padding: 6px;
-    background: linear-gradient(135deg, rgba(0, 243, 255, 0.6), rgba(147, 51, 234, 0.6), rgba(255, 0, 127, 0.6));
-    box-shadow:
-      0 0 45px rgba(0, 243, 255, 0.25),
-      0 0 60px rgba(147, 51, 234, 0.2),
-      0 20px 50px rgba(0, 0, 0, 0.8);
-    animation: floatFrame 5s ease-in-out infinite;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .hw-avatar-frame:hover {
-    transform: scale(1.04) rotate(2deg);
-    box-shadow:
-      0 0 60px rgba(0, 243, 255, 0.45),
-      0 0 80px rgba(147, 51, 234, 0.35),
-      0 30px 60px rgba(0, 0, 0, 0.9);
+    width: 220px;
+    height: 220px;
+    margin-top: 12px;
   }
 
-  @keyframes floatFrame {
-    0%, 100% { transform: translateY(0); }
+  /* Spinning ring */
+  .hw-avatar-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      rgba(0, 243, 255, 0.0) 0%,
+      rgba(0, 243, 255, 0.8) 25%,
+      rgba(147, 51, 234, 0.8) 50%,
+      rgba(255, 0, 127, 0.6) 75%,
+      rgba(0, 243, 255, 0.0) 100%
+    );
+    animation: ringSpinSlow 6s linear infinite;
+    border-radius: 50%;
+    padding: 2px;
+  }
+  .hw-avatar-ring::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: #080214;
+  }
+  @keyframes ringSpinSlow {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Outer glow */
+  .hw-avatar-glow {
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(147,51,234,0.22) 0%, transparent 70%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* Float keyframes */
+  @keyframes floatBob {
+    0%,100% { transform: translateY(0); }
     50%      { transform: translateY(-10px); }
   }
 
-  .hw-avatar-inner {
+  .hw-avatar-circle {
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
-    background: radial-gradient(circle at center, rgba(147, 51, 234, 0.3) 0%, rgba(4, 1, 15, 0.95) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: radial-gradient(circle at 50% 40%, rgba(147,51,234,0.3) 0%, rgba(4,1,14,0.95) 100%);
+    border: 2px solid rgba(0,243,255,0.2);
+    z-index: 2;
+    animation: floatBob 5s ease-in-out infinite;
   }
-
   .hw-avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    filter: brightness(1.06) contrast(1.04);
-    transition: transform 0.5s ease;
-  }
-  .hw-avatar-frame:hover .hw-avatar-img {
-    transform: scale(1.08);
+    object-position: center top;
+    filter: brightness(1.05) contrast(1.04);
   }
 
-  /* Divider */
-  .hw-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(147,51,234,0.4), transparent);
-    margin: 32px 0 20px 0;
-    animation: hwUp 0.6s ease 0.75s both;
+  /* ══════════════════════════════════════════════════
+     ROLE INDEX INDICATOR (dots row)
+  ══════════════════════════════════════════════════ */
+  .hw-role-dots {
+    display: flex;
+    gap: 5px;
+    margin: 0 0 22px 0;
+    animation: hwFade 0.5s ease 0.3s both;
+  }
+  .hw-role-pip {
+    width: 20px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.35s ease;
+  }
+  .hw-role-pip.active {
+    width: 28px;
+    background: #c084fc;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.7);
   }
 
-  /* Bottom tagline */
-  .hw-tagline {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.9em;
-    color: rgba(255,255,255,0.4);
-    animation: hwUp 0.6s ease 0.85s both;
+  /* ══════════════════════════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════════════════════════ */
+  @keyframes hwFade {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes hwUp {
-    from { opacity:0; transform:translateY(16px); }
-    to   { opacity:1; transform:translateY(0); }
+  /* ══════════════════════════════════════════════════
+     MOBILE RESPONSIVE
+  ══════════════════════════════════════════════════ */
+  @media (max-width: 860px) {
+    .hw-shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+    .hw-right {
+      width: 100%;
+      padding: 28px 20px 0;
+      justify-content: center;
+      order: -1;
+    }
+    .hw-avatar-wrap {
+      width: 160px;
+      height: 160px;
+      margin-top: 0;
+    }
+    .hw-left {
+      padding: 24px 20px 32px;
+    }
+    .hw-name {
+      font-size: 2.3em;
+      letter-spacing: -1.5px;
+      margin: 0 0 14px 0;
+    }
+    .hw-role-tag {
+      margin: 0 0 16px 0;
+      min-height: 32px;
+    }
+    .hw-role-text {
+      font-size: 1em;
+      white-space: normal;
+    }
+    .hw-bio {
+      font-size: 0.84em;
+      margin: 0 0 22px 0;
+    }
+    .hw-stats {
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+    }
+    .hw-stat {
+      padding: 12px 16px;
+    }
+    .hw-actions {
+      width: 100%;
+      margin: 0 0 22px 0;
+    }
+    .hw-btn-primary {
+      flex: 1;
+      justify-content: center;
+    }
   }
 
-  @media (max-width: 859px) {
-    .hw-root { padding: 20px 16px 28px; }
-    .hw-grid { grid-template-columns: 1fr; gap: 24px; }
-    .hw-right-col { order: -1; margin-bottom: 4px; }
-    .hw-avatar-frame { width: 200px; height: 200px; padding: 4px; }
-    .hw-name { font-size: 2.1em; }
-    .hw-type { font-size: 1.1em; min-height: 56px; line-height: 1.35; margin: 8px 0 18px; }
-    .hw-bio  { font-size: 0.85em; margin-bottom: 20px; line-height: 1.6; }
-    .hw-stats { gap: 14px 20px; margin-bottom: 22px; }
-    .hw-stat-num { font-size: 1.35em; }
-    .hw-cta-row { width: 100%; gap: 10px; }
-    .hw-cta-primary { flex: 1; justify-content: center; padding: 11px 18px; font-size: 0.84em; }
-    .hw-divider { margin: 20px 0 16px 0; }
-    .hw-tagline { font-size: 0.8em; line-height: 1.5; }
+  @media (max-width: 400px) {
+    .hw-name { font-size: 2em; }
+    .hw-left { padding: 20px 16px 28px; }
+    .hw-stat-lbl { font-size: 0.5em; }
+    .hw-stat-num { font-size: 1.3em; }
   }
 `;
 
 let injected = false;
+function injectOnce() {
+  if (injected) return;
+  const el = document.createElement("style");
+  el.id = "hw-v2-styles";
+  el.textContent = styles;
+  document.head.appendChild(el);
+  injected = true;
+}
 
 function HomeWindow() {
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+
   useEffect(() => {
-    if (injected) return;
-    if (!document.getElementById("hw-styles")) {
-      const el = document.createElement("style");
-      el.id = "hw-styles";
-      el.textContent = styles;
-      document.head.appendChild(el);
-      injected = true;
-    }
+    injectOnce();
   }, []);
+
+  /* Role carousel — cross-fade every 2.8s */
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setRoleIdx(prev => (prev + 1) % ROLES.length);
+        setVisible(true);
+      }, 350);
+    }, 2800);
+    return () => clearInterval(cycle);
+  }, []);
+
+  const role = ROLES[roleIdx];
 
   return (
     <div className="hw-root">
-      <div className="hw-grid">
-        {/* Left Column: Bio & Text */}
-        <div className="hw-left-col">
-          <p className="hw-im">HI THERE, I'M</p>
+      <div className="hw-shell">
+
+        {/* ── LEFT COLUMN ─────────────────────────────── */}
+        <div className="hw-left">
+
+          {/* Greeting */}
+          <p className="hw-greeting">Hi there, I'm</p>
+
+          {/* Name */}
           <h1 className="hw-name">Siddhant Garg</h1>
 
-          <div className="hw-type">
-            <Typewriter
-              options={{
-                strings: [
-                  "Growth Strategist.",
-                  "AI-Orchestration Architect.",
-                  "Product Builder.",
-                  "Campaign Engineer.",
-                  "The Guy Who Ships.",
-                ],
-                autoStart: true,
-                loop: true,
-                deleteSpeed: 40,
-                delay: 60,
+          {/* Role tag — fixed height, no overflow */}
+          <div className="hw-role-tag">
+            <span
+              className="hw-role-dot"
+              style={{
+                background: role.color,
+                color: role.color,
+                opacity: visible ? 1 : 0,
+                transition: "opacity 0.35s ease",
               }}
             />
+            <span
+              className="hw-role-text"
+              style={{
+                color: role.color,
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(6px)",
+                transition: "opacity 0.35s ease, transform 0.35s ease",
+              }}
+            >
+              {role.label}
+            </span>
           </div>
 
+          {/* Role progress pips */}
+          <div className="hw-role-dots">
+            {ROLES.map((_, i) => (
+              <span
+                key={i}
+                className={`hw-role-pip${i === roleIdx ? " active" : ""}`}
+                style={i === roleIdx ? { background: ROLES[i].color, boxShadow: `0 0 8px ${ROLES[i].color}` } : {}}
+              />
+            ))}
+          </div>
+
+          {/* Bio */}
           <p className="hw-bio">
-            I engineer measurable growth at the intersection of AI, brand strategy, and
-            consumer psychology - building campaigns, products, and systems that
-            move numbers.
+            I engineer <strong>measurable growth</strong> at the intersection of{" "}
+            <strong>AI, brand strategy</strong>, and consumer psychology — building
+            campaigns, products, and systems that actually move numbers.
           </p>
 
-          {/* Stats */}
+          {/* Stats grid */}
           <div className="hw-stats">
             <div className="hw-stat">
-              <span className="hw-stat-num">40<span>+</span></span>
+              <span className="hw-stat-num">40+</span>
               <span className="hw-stat-lbl">Inbound Leads</span>
             </div>
             <div className="hw-stat">
-              <span className="hw-stat-num">200<span>%</span></span>
+              <span className="hw-stat-num">200%</span>
               <span className="hw-stat-lbl">Growth Driven</span>
             </div>
             <div className="hw-stat">
-              <span className="hw-stat-num">12<span>+</span></span>
+              <span className="hw-stat-num">12+</span>
               <span className="hw-stat-lbl">Projects Shipped</span>
             </div>
             <div className="hw-stat">
-              <span className="hw-stat-num">3<span>+</span></span>
+              <span className="hw-stat-num">3+</span>
               <span className="hw-stat-lbl">Years Building</span>
             </div>
           </div>
 
-          {/* CTAs */}
-          <div className="hw-cta-row">
+          {/* Actions */}
+          <div className="hw-actions">
             <a
               href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
               target="_blank"
               rel="noopener noreferrer"
-              className="hw-cta-primary"
+              className="hw-btn-primary"
             >
               Connect on LinkedIn →
             </a>
-            <a
-              href="mailto:siddhantgarg563@gmail.com"
-              className="hw-soc-icon"
-              title="Email Siddhant"
-            >
+            <a href="mailto:siddhantgarg563@gmail.com" className="hw-btn-icon" title="Email">
               <FaEnvelope />
             </a>
             <a
               href="https://www.linkedin.com/in/siddhant-garg-979378249?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
               target="_blank"
               rel="noopener noreferrer"
-              className="hw-soc-icon"
-              title="LinkedIn Profile"
+              className="hw-btn-icon"
+              title="LinkedIn"
             >
               <FaLinkedinIn />
             </a>
           </div>
+
+          {/* Tagline */}
+          <p className="hw-tagline">
+            Gwalior, India &nbsp;•&nbsp; VIT Bhopal &nbsp;•&nbsp; Open to Opportunities
+          </p>
         </div>
 
-        {/* Right Column: Circular Floating Cyber Avatar (Original avatar.png) */}
-        <div className="hw-right-col">
-          <div className="hw-avatar-frame">
-            <div className="hw-avatar-inner">
+        {/* ── RIGHT COLUMN — Avatar ────────────────────── */}
+        <div className="hw-right">
+          <div className="hw-avatar-wrap">
+            <div className="hw-avatar-glow" />
+            <div className="hw-avatar-ring" />
+            <div className="hw-avatar-circle">
               <img
                 src={avatarImg}
-                alt="Siddhant Garg Avatar"
+                alt="Siddhant Garg"
                 className="hw-avatar-img"
               />
             </div>
           </div>
         </div>
+
       </div>
-
-      <div className="hw-divider" />
-
-      <p className="hw-tagline">
-        Gwalior, India • VIT Bhopal • Open to Opportunities
-      </p>
     </div>
   );
 }
